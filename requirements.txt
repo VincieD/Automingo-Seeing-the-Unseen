@@ -1,0 +1,17 @@
+pyyaml
+timm
+torch
+torchvision
+accelerate
+transformers>=4.43.2,<5.0.0
+pillow
+trl
+datasets
+peft
+einops
+flash-attn
+protobuf
+sentencepiece
+openai
+google-genai
+anthropic

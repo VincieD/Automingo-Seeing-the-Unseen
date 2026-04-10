@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dataset Labeling - Collaborative</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #2563eb; --primary-dark: #1e40af;
+      --success: #10b981; --danger: #ef4444; --warning: #f59e0b;
+      --bg-main: #0f172a; --bg-card: #1e293b; --bg-hover: #334155;
+      --text-primary: #f1f5f9; --text-secondary: #94a3b8;
+      --border: #334155; --shadow: rgba(0,0,0,0.3);
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+    .app-container { min-height: 100vh; padding: 2rem; }
+    .header { max-width: 1400px; margin: 0 auto 2rem; text-align: center; padding-bottom: 2rem; border-bottom: 2px solid var(--border); }
+    .header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .header p { color: var(--text-secondary); font-size: 1.1rem; }
+    .main-content { max-width: 1400px; margin: 0 auto; }
+    .setup-screen { background: var(--bg-card); border-radius: 16px; padding: 3rem; box-shadow: 0 20px 60px var(--shadow); max-width: 800px; margin: 0 auto; }
+    .setup-screen h2 { font-size: 1.8rem; margin-bottom: 1.5rem; }
+    .setup-instructions { background: var(--bg-main); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid var(--primary); }
+    .setup-instructions ol { margin-left: 1.5rem; color: var(--text-secondary); }
+    .setup-instructions li { margin-bottom: 0.5rem; }
+    .setup-instructions code { background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.9rem; }
+    .input-group { margin-bottom: 1.5rem; }
+    .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    .input-group input, .input-group textarea { width: 100%; padding: 0.75rem 1rem; background: var(--bg-main); border: 2px solid var(--border); border-radius: 8px; color: var(--text-primary); font-size: 0.95rem; transition: all 0.2s; }
+    .input-group input:focus, .input-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .input-group textarea { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; min-height: 100px; resize: vertical; }
+    .input-group small { display: block; margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.85rem; }
+    .btn { padding: 0.75rem 2rem; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover:not(:disabled) { background: #059669; transform: translateY(-1px); }
+    .btn-secondary { background: var(--bg-hover); color: var(--text-primary); }
+    .btn-secondary:hover:not(:disabled) { background: #475569; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+    .btn-warn { background: #f59e0b; color: white; }
+    .btn-warn:hover:not(:disabled) { background: #d97706; transform: translateY(-1px); }
+    .labeling-screen { display: grid; gap: 2rem; }
+    .progress-bar { background: var(--bg-card); border-radius: 12px; padding: 1.5rem; }
+    .progress-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .progress-track { height: 8px; background: var(--bg-main); border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--success)); transition: width 0.3s ease; }
+    .image-viewer { background: var(--bg-card); border-radius: 16px; padding: 2rem; box-shadow: 0 10px 40px var(--shadow); }
+    .image-viewer-sticky { position: sticky; top: 1rem; z-index: 10; }
+    .image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .image-container { position: relative; background: var(--bg-main); border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform 0.2s; aspect-ratio: 16/9; }
+    .image-container:hover { transform: scale(1.02); }
+    .image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .image-label { position: absolute; top: 0.5rem; left: 0.5rem; background: rgba(0,0,0,0.7); color: white; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; }
+    .img-error { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1e293b; color: var(--text-secondary); font-size: 0.8rem; flex-direction: column; gap: 0.5rem; text-align: center; padding: 1rem; }
+    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 2rem; }
+    .modal img { max-width: 90%; max-height: 90%; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .modal-close { position: absolute; top: 2rem; right: 2rem; background: white; color: black; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; font-size: 1.5rem; }
+    .question-form { background: var(--bg-card); border-radius: 16px; padding: 2rem; box-shadow: 0 10px 40px var(--shadow); }
+    .question-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .question-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .question-section h3 { font-size: 1.2rem; margin-bottom: 1rem; color: var(--primary); }
+    .question-text { font-size: 1.05rem; margin-bottom: 1rem; color: var(--text-primary); font-weight: 500; }
+    .example-answer { background: var(--bg-main); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 3px solid var(--warning); font-size: 0.9rem; color: var(--text-secondary); }
+    .example-answer strong { color: var(--warning); display: block; margin-bottom: 0.5rem; }
+    .radio-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .radio-option { flex: 1; min-width: 120px; }
+    .radio-option input[type="radio"] { display: none; }
+    .radio-option label { display: block; padding: 0.75rem 1.5rem; background: var(--bg-main); border: 2px solid var(--border); border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; font-weight: 500; }
+    .radio-option input[type="radio"]:checked + label { background: var(--primary); border-color: var(--primary); color: white; }
+    .radio-option label:hover { border-color: var(--primary); }
+    .action-buttons { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; flex-wrap: wrap; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--bg-card); padding: 1.5rem; border-radius: 12px; text-align: center; }
+    .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .stat-label { color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem; }
+    .loading { text-align: center; padding: 3rem; color: var(--text-secondary); }
+    .spinner { border: 3px solid var(--border); border-top: 3px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .alert { padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.95rem; }
+    .alert-info { background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.3); color: #60a5fa; }
+    .alert-success { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: #34d399; }
+    .alert-warning { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: #fbbf24; }
+    .alert-danger { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+    .labeler-badge { background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.4); color: #c4b5fd; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500; display: inline-block; }
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+    .empty-badge { background: rgba(245,158,11,0.15); border: 2px dashed rgba(245,158,11,0.5); color: #fbbf24; padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; display: inline-block; margin-left: 0.5rem; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+  const { useState, useEffect, useCallback, useRef } = React;
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // SITUACIONES Y PREGUNTAS
+  // ════════════════════════════════════════════════════════════════════════════
+  // Para editar preguntas: modifica el array "questions" de cada situación.
+  // Cada pregunta tiene:
+  //   id       → identificador único (q1, q2, ...)
+  //   text     → texto de la pregunta que verá el labeler
+  //   type     → 'yes_no' | 'green_red' | 'number'
+  //   example  → ejemplo de razonamiento que aparece como ayuda
+  // ════════════════════════════════════════════════════════════════════════════
+  const SITUATIONS = {
+  'Traffic light': {
+    timeSpan: '-2, -1, 0, 1, 2',
+    questions: [
+      { id: 'q1', text: 'Do you observe any red traffic light regulating the ego lane?', type: 'yes_no', example: 'A red traffic light is visible directly ahead, aligned with the ego lane and direction of travel.' },
+      { id: 'q2', text: 'What is the color of the traffic light regulating the ego lane?', type: 'green_red', example: 'The traffic light facing the ego lane displays green.' },
+      { id: 'q3', text: 'Is the ego vehicle positioned in a dedicated right-turn lane before the traffic light?', type: 'yes_no', example: 'The ego vehicle is located in a right-turn-only lane indicated by road arrow markings.' },
+      { id: 'q4', text: 'Is the ego vehicle positioned in a dedicated left-turn lane before the traffic light?', type: 'yes_no', example: 'The ego vehicle is located in a left-turn-only lane indicated by road arrow markings.' },
+      { id: 'q5', text: 'Are multiple traffic lights regulating the ego direction of travel displaying different colors simultaneously?', type: 'yes_no', example: 'Two traffic lights facing the ego direction show different colors, one red and one green.' }
+    ]
+  },
+
+  'Leading braking': {
+    timeSpan: '-2, -1, 0, 1, 2',
+    questions: [
+      { id: 'q1', text: 'Is there a vehicle directly ahead in the ego lane with brake lights on?', type: 'yes_no', example: 'A vehicle in front of the ego vehicle shows active red brake lights.' },
+      { id: 'q2', text: 'Is the distance between the ego vehicle and the vehicle ahead decreasing?', type: 'yes_no', example: 'The relative distance to the leading vehicle is reducing over time.' },
+      { id: 'q3', text: 'Is either the ego vehicle or the leading vehicle stationary?', type: 'yes_no', example: 'The leading vehicle appears stationary with brake lights on.' },
+      { id: 'q4', text: 'Is the ego vehicle decelerating due to dense traffic or congestion ahead?', type: 'yes_no', example: 'Multiple closely spaced vehicles ahead indicate traffic congestion.' }
+    ]
+  },
+
+  'Cut in': {
+    timeSpan: '-3, -1.5, 0, 1.5, 3',
+    questions: [
+      { id: 'q1', text: 'Is a vehicle from an adjacent lane moving into the ego lane?', type: 'yes_no', example: 'A vehicle from the left lane is crossing the lane marking into the ego lane.' },
+      { id: 'q2', text: 'Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?', type: 'yes_no', example: 'A vehicle has entered the ego lane directly ahead with no vehicle in between.' },
+      { id: 'q3', text: 'Is the ego vehicle currently inside a roundabout?', type: 'yes_no', example: 'The ego vehicle is traveling within a circular roadway around a central island.' },
+      { id: 'q4', text: 'Is the ego vehicle currently within an intersection?', type: 'yes_no', example: 'Crossing lanes and intersection markings are visible around the ego vehicle.' },
+      { id: 'q5', text: 'Is any vehicle partially overlapping the lane boundary markings of the ego lane?', type: 'yes_no', example: 'A vehicle is positioned partially over the dashed line on the right side of the ego lane.' }
+    ]
+  },
+
+  'Construction site': {
+    timeSpan: '-2, -1, 0, 1, 2',
+    questions: [
+      { id: 'q1', text: 'Are construction-related signs, cones, temporary signals, or closed lanes visible in the scene?', type: 'yes_no', example: 'Orange cones and temporary yellow warning signs are present along the roadway.' },
+      { id: 'q2', text: 'Are temporary yellow lane markings visible?', type: 'yes_no', example: 'Yellow lane lines are visible, indicating a temporary traffic layout.' },
+      { id: 'q3', text: 'Are road workers visible on or near the roadway?', type: 'yes_no', example: 'Workers wearing reflective safety vests are visible near the roadside.' },
+      { id: 'q4', text: 'Is the ego lane narrowed or laterally shifted due to construction elements?', type: 'yes_no', example: 'The lane markings shift to the right and cones reduce the available lane width.'},
+      { id: 'q5', text: 'Is construction machinery or heavy equipment present near or within the roadway?', type: 'yes_no', example: 'An excavator is positioned on the shoulder adjacent to the ego lane.' },
+      { id: 'q6', text: 'Is a temporary reduced speed limit sign visible in the scene?', type: 'yes_no', example: 'A temporary 30 km/h speed limit sign is posted before the work zone.'}
+    ]
+  },
+
+  'Crossing object': {
+    timeSpan: '-2, -1, 0, 1, 2',
+    questions: [
+      { id: 'q1', text: 'Is there any discontinuity in the ego lane ahead?', type: 'yes_no', example: 'Lane markings ahead are interrupted, indicating an intersection.' },
+      { id: 'q2', text: 'Is any vehicle or pedestrian crossing the path of the ego vehicle from a different direction?', type: 'yes_no', example: "A pedestrian is crossing from left to right across the ego vehicle's trajectory." },
+      { id: 'q3', text: 'Is there a vehicle ahead in the ego lane traveling in the same direction as the ego vehicle?', type: 'yes_no', example: 'A vehicle ahead is aligned within the ego lane and moving in the same direction.' },
+      { id: 'q4', text: 'Is there any crossing object in the ego lane ahead?', type: 'yes_no', example: 'There is an object in the perpendicular direction of our ego car.' }
+    ]
+  },
+
+  'Lateral parked car': {
+    timeSpan: '-1, -0.5, 0, 0.5, 1',
+    questions: [
+      { id: 'q1', text: 'Are vehicles present on the right side of the ego lane?', type: 'yes_no', example: 'Parked vehicles are visible along the right side of the roadway.' },
+      { id: 'q2', text: 'Are vehicles parked parallel or perpendicular to the roadway near the ego lane?', type: 'yes_no', example: 'Several vehicles are parked parallel to the curb on the right.' },
+      { id: 'q3', text: 'Does the environment indicate an urban road where curbside parking is permitted?', type: 'yes_no', example: 'Buildings and curbside parking indicate an urban environment.' },
+      { id: 'q4', text: 'Is the ego vehicle traveling in a middle lane with traffic lanes on both sides?', type: 'yes_no', example: 'Lane markings indicate the ego vehicle is in a central lane with adjacent lanes on both sides.' },
+      { id: 'q5', text: 'Are vehicles present on the left side of the ego lane?', type: 'yes_no', example: 'Parked vehicles are visible along the left side of the roadway.' }
+    ]
+  },
+
+  'Pedestrian': {
+    timeSpan: '-2, -1, 0, 1, 2',
+    questions: [
+      { id: 'q1', text: 'Is the ego vehicle traveling on a narrow street with sidewalks or bike lanes directly adjacent to the roadway?', type: 'yes_no', example: 'The roadway is narrow with sidewalks immediately adjacent to the driving lane.' },
+      { id: 'q2', text: 'Are pedestrians or cyclists moving alongside the ego vehicle on the right side?', type: 'yes_no', example: 'A cyclist is riding parallel to the ego vehicle on the right side.' },
+      { id: 'q3', text: "Could a pedestrian's current path intersect with the trajectory of the ego vehicle?", type: 'yes_no', example: 'A pedestrian is walking toward the roadway and may enter the ego lane.' },
+      { id: 'q4', text: 'Are pedestrians or cyclists moving alongside the ego vehicle on the left side?', type: 'yes_no', example: 'A cyclist is riding parallel to the ego vehicle on the left side.' }
+    ]
+  },
+
+  'Merging lane': {
+    timeSpan: '-2, -1, 0, 1, 2',
+    questions: [
+      { id: 'q1', text: 'Is the ego vehicle currently traveling within an acceleration or merge lane?', type: 'yes_no', example: 'The lane widens with merge markings typical of an acceleration lane.' },
+      { id: 'q2', text: 'Is there an adjacent acceleration lane merging into the ego lane?', type: 'yes_no', example: 'A separate lane on the right is tapering into the ego lane.' },
+      { id: 'q3', text: 'Do the outer lane markings of an adjacent lane converge into the ego lane?', type: 'yes_no', example: 'The right lane markings converge into the ego lane, indicating a merge.' }
+    ]
+  },
+
+  'Intersection road': {
+    timeSpan: '-2, -1, 0, 1, 2',
+    questions: [
+      { id: 'q1', text: 'Is there an intersection ahead in the ego direction of travel?', type: 'yes_no', example: 'Cross streets and traffic signals are visible ahead.' },
+      { id: 'q2', text: 'Do lane markings remain continuous through the intersection in the ego lane?', type: 'yes_no', example: 'Lane markings continue clearly through the intersection.' },
+      { id: 'q3', text: 'Is there a visible gap or discontinuity in the ego lane markings?', type: 'yes_no', example: 'The lane markings disappear within the intersection area.' },
+      { id: 'q4', text: 'Do lane markings from two different lanes converge into a single lane?', type: 'yes_no', example: 'Two lanes merge into one as indicated by converging markings.' }
+    ]
+  },
+
+  'Roundabout': {
+    timeSpan: '-2, -1, 0, 1, 2',
+    questions: [
+      { id: 'q1', text: 'Is the ego vehicle currently inside a roundabout?', type: 'yes_no', example: 'The ego vehicle is traveling within a circular roadway surrounding a central island.' },
+      { id: 'q2', text: 'Is a roundabout visible ahead in the ego direction?', type: 'yes_no', example: 'A circular intersection sign and central island are visible ahead.' },
+      { id: 'q3', text: 'Is the ego vehicle stationary while another vehicle crosses its path within the roundabout?', type: 'yes_no', example: 'The ego vehicle is stopped while another vehicle crosses from left to right inside the roundabout.' }
+    ]
+  },
+
+  'Speed limit adaptation': {
+    timeSpan: '-1, -0.5, 0, 0.5, 1',
+    questions: [
+      { id: 'q1', text: 'Are multiple speed limit signs with different values visible?', type: 'yes_no', example: 'Two speed limit signs displaying different values appear sequentially.' },
+      { id: 'q2', text: 'Is there a speed limit sign regulating the ego lane?', type: 'yes_no', example: 'A speed limit sign is positioned on the roadside facing the ego direction of travel.' },
+      { id: 'q3', text: 'What speed value is displayed on the visible speed limit sign?', type: 'number', example: 'The visible speed limit sign displays 50 km/h.' },
+      { id: 'q4', text: 'Is the ego vehicle traveling on a highway?', type: 'yes_no', example: 'Multiple wide lanes and highway-style signage indicate a highway environment.' },
+      { id: 'q5', text: 'Is the ego vehicle entering or exiting a highway?', type: 'yes_no', example: 'A ramp with merge arrows indicates highway entry.' },
+      { id: 'q6', text: 'Are speed bumps, crosswalks, or construction-related obstacles present in the ego lane?', type: 'yes_no', example: 'A marked pedestrian crosswalk is visible directly ahead in the ego lane.' }
+    ]
+  }
+};
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // BANCO DE PREGUNTAS PARA EMPTY
+  // ════════════════════════════════════════════════════════════════════════════
+  // Se construye aplanando todas las preguntas de todas las situaciones.
+  // Cada caso empty recibe 1 pregunta del banco de forma rotativa y uniforme:
+  // se reparte 1 por situación en orden, y al acabar el ciclo se reinicia.
+  // ════════════════════════════════════════════════════════════════════════════
+  // Distribución uniforme por usuario:
+  //   - Cada usuario tiene un offset de inicio determinista (hash del nombre)
+  //     → mismo punto de partida siempre para esa persona, distinto entre personas.
+  //   - Cada caso empty consume 4 preguntas consecutivas del banco.
+  //   - El índice avanza de 4 en 4 y hace ciclo al acabar el banco.
+  //   - El índice se persiste en localStorage con clave por usuario.
+  // ════════════════════════════════════════════════════════════════════════════
+  const EMPTY_Q_PER_CASE = 4;
+
+  // Questions excluded from the empty bank: context-specific types that make
+  // no sense without their own situation (color of a traffic light, speed value).
+  const EMPTY_BANK_EXCLUDED = new Set([
+    'What is the color of the traffic light regulating the ego lane?',
+    'What speed value is displayed on the visible speed limit sign?'
+  ]);
+
+  const EMPTY_QUESTION_BANK = Object.entries(SITUATIONS).flatMap(([sitName, sitCfg]) =>
+    sitCfg.questions
+      .filter(q => !EMPTY_BANK_EXCLUDED.has(q.text))
+      .map(q => ({
+        ...q,
+        situation: sitName,
+        timeSpan: sitCfg.timeSpan,
+        id: `${sitName.replace(/\s+/g, '_')}_${q.id}`
+      }))
+  );
+
+
+  function nameToOffset(name, bankLen) {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+    return hash % bankLen;
+  }
+
+  function emptyQKey(name) {
+    return `empty-q-index::${name.trim().toLowerCase()}`;
+  }
+
+  function initEmptyQIndex(name) {
+    const key = emptyQKey(name);
+    if (localStorage.getItem(key) === null) {
+      localStorage.setItem(key, String(nameToOffset(name, EMPTY_QUESTION_BANK.length)));
+    }
+  }
+
+  function getNextEmptyQuestions(name) {
+    initEmptyQIndex(name);
+    const key = emptyQKey(name);
+    const bankLen = EMPTY_QUESTION_BANK.length;
+    let idx = parseInt(localStorage.getItem(key) || '0', 10);
+    if (isNaN(idx) || idx >= bankLen) idx = 0;
+    const qs = [];
+    for (let i = 0; i < EMPTY_Q_PER_CASE; i++) qs.push(EMPTY_QUESTION_BANK[(idx + i) % bankLen]);
+    localStorage.setItem(key, String((idx + EMPTY_Q_PER_CASE) % bankLen));
+    return qs;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // ALIASES: el servidor puede devolver nombres ligeramente distintos
+  // ════════════════════════════════════════════════════════════════════════════
+  const SITUATION_ALIASES = {
+    'Intersection':           'Intersection road',
+    'Intersection Road':      'Intersection road',
+    'Vulnerable':             'Pedestrian',
+    'Vulnerable road user':   'Pedestrian',
+    'Cut-in':                 'Cut in',
+    'Construction Site':      'Construction site',
+    'Leading Braking':        'Leading braking',
+    'Lateral Parked Car':     'Lateral parked car',
+    'Merging Lane':           'Merging lane',
+    'Speed Limit Adaptation': 'Speed limit adaptation',
+    'Traffic Light':          'Traffic light',
+  };
+
+  // ── ImageWithFallback ─────────────────────────────────────────────────────
+  function ImageWithFallback({ src, alt, onClick }) {
+    const [error, setError] = useState(false);
+    const [loaded, setLoaded] = useState(false);
+    useEffect(() => { setError(false); setLoaded(false); }, [src]);
+    return (
+      <div className="image-container" onClick={!error ? onClick : undefined} style={{ cursor: error ? 'default' : 'pointer' }}>
+        {!error ? (
+          <img src={src} alt={alt}
+            onError={() => setError(true)}
+            onLoad={() => setLoaded(true)}
+            style={{ opacity: loaded ? 1 : 0.3, transition: 'opacity 0.3s' }} />
+        ) : (
+          <div className="img-error">
+            <span style={{ fontSize: '2rem' }}>🖼️</span>
+            <span>Image not found</span>
+            <small style={{ fontSize: '0.7rem', wordBreak: 'break-all', opacity: 0.6 }}>{src.split('/').slice(-3).join('/')}</small>
+          </div>
+        )}
+        <div className="image-label">{alt}</div>
+      </div>
+    );
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // MAIN APP
+  // ════════════════════════════════════════════════════════════════════════════
+  function App() {
+    const [mode, setMode] = useState('setup'); // 'setup' | 'labeling' | 'complete'
+    const [labelerName, setLabelerName] = useState('');
+    const [imageBaseUrl, setImageBaseUrl] = useState(() => {
+      const origin = window.location.origin;
+      return origin !== 'null' && !origin.startsWith('file') ? origin : 'http://localhost:5000';
+    });
+    const [casesData, setCasesData] = useState([]);
+    const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
+    const [answers, setAnswers] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [submitting, setSubmitting] = useState(false); // spinnersubmit separado
+    const [zoomedImage, setZoomedImage] = useState(null);
+    const [labeledCases, setLabeledCases] = useState([]);
+    // confirmedSituation: null | 'SituationName' | 'empty:SituationName'
+    const [confirmedSituation, setConfirmedSituation] = useState(null);
+    // Para empty: las 4 preguntas del banco asignadas a este caso
+    const [emptyQuestions, setEmptyQuestions] = useState([]);
+    // Cuando el prelabel es 'empty' y el usuario dice NO → debe elegir situación real
+    // 'idle' | 'picking' (mostrando selector de situación)
+    const [pickingSituation, setPickingSituation] = useState(false);
+    const [serverStatus, setServerStatus] = useState(null); // null | 'ok' | 'error'
+    const [batchSize, setBatchSize] = useState(20);
+    const [freeCasesOnServer, setFreeCasesOnServer] = useState(null);
+    const [validationError, setValidationError] = useState('');
+    const [datasetTag, setDatasetTag] = useState('');
+
+    // ── Carga de progreso guardado ─────────────────────────────────────────
+    useEffect(() => {
+      try {
+        const saved = localStorage.getItem('labeling-progress');
+        if (saved) {
+          const p = JSON.parse(saved);
+          if (p.labeledCases) setLabeledCases(p.labeledCases);
+          if (p.casesData && p.casesData.length > 0) setCasesData(p.casesData);
+          if (p.labelerName) setLabelerName(p.labelerName);
+          if (p.imageBaseUrl) setImageBaseUrl(p.imageBaseUrl);
+        }
+      } catch (e) { console.warn('Could not restore progress', e); }
+    }, []);
+
+    const saveProgress = (newLabeled, newCases) => {
+      try {
+        localStorage.setItem('labeling-progress', JSON.stringify({
+          labeledCases: newLabeled,
+          casesData: newCases || casesData,
+          labelerName,
+          imageBaseUrl,
+          lastUpdate: new Date().toISOString()
+        }));
+      } catch(e) { console.warn('Could not save progress', e); }
+    };
+
+    // ── Navegación con teclado en el modal de zoom ──────────────────────────
+    useEffect(() => {
+      if (!zoomedImage) return;
+      const imgs = getImageUrls();
+      const handleKey = (e) => {
+        if (e.key === 'ArrowLeft') {
+          const cur = imgs.indexOf(zoomedImage);
+          if (cur > 0) setZoomedImage(imgs[cur - 1]);
+        } else if (e.key === 'ArrowRight') {
+          const cur = imgs.indexOf(zoomedImage);
+          if (cur < imgs.length - 1) setZoomedImage(imgs[cur + 1]);
+        } else if (e.key === 'Escape') {
+          setZoomedImage(null);
+        }
+      };
+      window.addEventListener('keydown', handleKey);
+      return () => window.removeEventListener('keydown', handleKey);
+    }, [zoomedImage, currentCaseIndex]);
+
+    // ── Precargar imágenes del siguiente caso ─────────────────────────────
+    // Cada vez que cambia el caso actual, lanzamos la carga en background
+    // de las imágenes del siguiente caso no labelizado. Así cuando el usuario
+    // llega a él, el navegador ya las tiene en caché y aparecen al instante.
+    useEffect(() => {
+      if (!casesData.length || !imageBaseUrl) return;
+      const labeledIdsSet = new Set(labeledCases.map(c => c.sceneId));
+      // Buscar el índice del caso SIGUIENTE (el que viene después del actual)
+      const nextIdx = casesData.findIndex((c, i) => i > currentCaseIndex && !labeledIdsSet.has(c.sceneId));
+      const caseToPreload = nextIdx !== -1 ? casesData[nextIdx] : null;
+      if (!caseToPreload) return;
+      const base = imageBaseUrl.replace(/\/$/, '');
+      const urls = caseToPreload.images && caseToPreload.images.length > 0
+        ? caseToPreload.images.map(p => `${base}/${p}`)
+        : [1,2,3,4,5].map(n => `${base}/${caseToPreload.folderName || caseToPreload.prelabel}/${caseToPreload.sceneId}/im${n}.jpg`);
+      // new Image() dispara la petición HTTP; el navegador la cachea automáticamente
+      urls.forEach(url => { const img = new Image(); img.src = url; });
+    }, [currentCaseIndex, casesData, imageBaseUrl, labeledCases]);
+
+    // ── Helpers de estado ──────────────────────────────────────────────────
+    const getCurrentCase = () => casesData[currentCaseIndex] || null;
+
+    const getImageUrls = () => {
+      const c = getCurrentCase();
+      if (!c) return [];
+      const base = imageBaseUrl.replace(/\/$/, '');
+      if (c.images && c.images.length > 0) return c.images.map(p => `${base}/${p}`);
+      return [1,2,3,4,5].map(n => `${base}/${c.folderName || c.prelabel}/${c.sceneId}/im${n}.jpg`);
+    };
+
+    const labeledIds = new Set(labeledCases.map(c => c.sceneId));
+
+    const findNextUnlabeledIndex = (labeled) => {
+      const ids = new Set((labeled || labeledCases).map(c => c.sceneId));
+      return casesData.findIndex(c => !ids.has(c.sceneId));
+    };
+
+    const getDisplaySituation = () => {
+      if (!confirmedSituation) return null;
+      const raw = confirmedSituation.startsWith('empty:')
+        ? confirmedSituation.slice(6) : confirmedSituation;
+      return SITUATION_ALIASES[raw] || raw;
+    };
+
+    const isMarkedEmpty = () => !!confirmedSituation && confirmedSituation.startsWith('empty:');
+
+    // ── Preguntas activas (según si es empty o no) ─────────────────────────
+    const getActiveQuestions = () => {
+      if (isMarkedEmpty()) {
+        return emptyQuestions.length > 0 ? emptyQuestions : [];
+      }
+      const sit = getDisplaySituation();
+      return sit && SITUATIONS[sit] ? SITUATIONS[sit].questions : [];
+    };
+
+    // ── Validación antes de enviar ─────────────────────────────────────────
+    const validateAnswers = () => {
+      const qs = getActiveQuestions();
+      for (const q of qs) {
+        if (!answers[q.id] && answers[q.id] !== 0) return `Selecciona una respuesta para la pregunta: "${q.text.substring(0,60)}..."`;
+        const reasoning = (answers[`${q.id}_reasoning`] || '').trim();
+        if (!reasoning) return `El razonamiento es obligatorio para: "${q.text.substring(0,60)}..."`;
+      }
+      return '';
+    };
+
+    // ── Servidor ───────────────────────────────────────────────────────────
+    const autoDetectCases = async (requestBatch = false) => {
+      if (!labelerName.trim()) { alert('Enter your name primero'); return; }
+      if (!imageBaseUrl.trim()) { alert('Please enter the server URL'); return; }
+      setLoading(true);
+      setServerStatus(null);
+      try {
+        const base = imageBaseUrl.replace(/\/$/, '');
+        const batchParam = requestBatch ? `&batch=${batchSize}` : '';
+        const r = await fetch(`${base}/api/cases?labeler=${encodeURIComponent(labelerName)}${batchParam}`);
+        if (!r.ok) throw new Error(`Server returned ${r.status}`);
+        const data = await r.json();
+        const cases = (data.cases || []).map(c => ({
+          ...c, images: (c.images || []).map(p => `images/${p}`)
+        }));
+        if (cases.length === 0 && requestBatch) {
+          alert('No free cases left on the server. Dataset fully assigned!');
+        } else {
+          // Sync server-side "done" flag into local labeledCases.
+          // Cases the server marks done but not yet in local storage get added
+          // as stub entries so findNextUnlabeledIndex skips them correctly.
+          const serverDoneIds = new Set(cases.filter(c => c.done).map(c => c.sceneId));
+          const localIds = new Set(labeledCases.map(c => c.sceneId));
+          const missingLocally = [...serverDoneIds].filter(id => !localIds.has(id));
+          const stubEntries = missingLocally.map(id => ({
+            sceneId: id, situation: '(completed on server)', timeSpan: '', answers: [], labeler: labelerName
+          }));
+          const mergedLabeled = stubEntries.length > 0
+            ? [...labeledCases, ...stubEntries]
+            : labeledCases;
+          if (stubEntries.length > 0) setLabeledCases(mergedLabeled);
+
+          setCasesData(cases);
+          saveProgress(mergedLabeled, cases);
+          setServerStatus('ok');
+          setFreeCasesOnServer(data.free_cases ?? null);
+          if (data.dataset_tag) setDatasetTag(data.dataset_tag);
+          const done = data.completed || 0;
+          const syncMsg = stubEntries.length > 0 ? `\n(${stubEntries.length} cases synced from server as already done)` : '';
+          alert(`✓ ${data.assigned} casos assigned · ${done} completed · ${data.assigned - done} pending · ${data.free_cases ?? '?'} free on server${syncMsg}`);
+        }
+      } catch (err) {
+        setServerStatus('error');
+        alert(`Cannot connect to the server.\n\nEjecuta:\n  python servidor_colaborativo.py --images /ruta/final_events\n\nError: ${err.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // ── Inicio del labeling ────────────────────────────────────────────────
+    const startLabeling = () => {
+      if (!labelerName.trim()) { alert('Please enter your name'); return; }
+      if (!imageBaseUrl.trim()) { alert('Please enter the server URL'); return; }
+      if (!casesData.length) { alert('Load cases from the server first'); return; }
+      const next = findNextUnlabeledIndex(labeledCases);
+      if (next === -1) { setMode('complete'); return; }
+      setCurrentCaseIndex(next);
+      setConfirmedSituation(null);
+      setEmptyQuestions([]);
+      setAnswers({});
+      setValidationError('');
+      setMode('labeling');
+    };
+
+    // ── Confirmación de situación ──────────────────────────────────────────
+    // Tres flujos posibles:
+    //
+    //  A) prelabel != 'empty' + SÍ  → confirmar situación, mostrar sus preguntas
+    //  B) prelabel != 'empty' + NO  → marcar como empty, asignar 4 del banco
+    //  C) prelabel == 'empty' + SÍ  → es un empty real, asignar 4 del banco
+    //  D) prelabel == 'empty' + NO  → mostrar selector de las 11 situaciones
+    //
+    const handleSituationConfirmation = (isCorrect) => {
+      const c = getCurrentCase();
+      if (!c) return;
+      const prelabelIsEmpty = c.prelabel.toLowerCase() === 'empty';
+      setAnswers({});
+      setValidationError('');
+
+      if (prelabelIsEmpty && !isCorrect) {
+        // Flujo D: el usuario dice que NO es empty → mostrar selector
+        setPickingSituation(true);
+        setConfirmedSituation(null);
+        setEmptyQuestions([]);
+      } else if (isCorrect && !prelabelIsEmpty) {
+        // Flujo A: situación normal confirmada
+        setConfirmedSituation(c.prelabel);
+        setEmptyQuestions([]);
+        setPickingSituation(false);
+      } else {
+        // Flujo B o C: marcar como empty → 4 preguntas del banco
+        setConfirmedSituation(`empty:${c.prelabel}`);
+        setEmptyQuestions(getNextEmptyQuestions(labelerName));
+        setPickingSituation(false);
+      }
+    };
+
+    // Flujo D: el usuario elige manualmente la situación real
+    const handleManualSituationPick = (sitName) => {
+      setPickingSituation(false);
+      setConfirmedSituation(sitName);  // situación real elegida (no empty)
+      setEmptyQuestions([]);
+      setAnswers({});
+      setValidationError('');
+    };
+
+    const handleAnswerChange = (qId, value) => {
+      setAnswers(prev => ({ ...prev, [qId]: value }));
+      setValidationError('');
+    };
+
+    // ── Generar respuestas incorrectas con IA ──────────────────────────────
+    const generateWrongAnswers = async (question, correctAnswer, situation) => {
+      try {
+        if (correctAnswer === 'Yes') return ['No', 'No', 'No'];
+        if (correctAnswer === 'No') return ['Yes', 'Yes', 'Yes'];
+        if (correctAnswer === 'Green') return ['Red', 'Red', 'Red'];
+        if (correctAnswer === 'Red') return ['Green', 'Green', 'Green'];
+        const data = await r.json();
+        const text = data.content?.find(c => c.type === 'text')?.text || '[]';
+        return JSON.parse(text.replace(/```json|```/g, '').trim());
+      } catch (e) {
+        console.error('generateWrongAnswers failed', e);
+        return ['N/A', 'N/A', 'N/A'];
+      }
+    };
+
+    // ── Submit de caso ─────────────────────────────────────────────────────
+    const submitCase = async () => {
+      const err = validateAnswers();
+      if (err) { setValidationError(err); return; }
+      const currentCase = getCurrentCase();
+      if (!currentCase) return;
+
+      setSubmitting(true);
+      setValidationError('');
+
+      const displaySit = getDisplaySituation();
+      const empty = isMarkedEmpty();
+      const qs = getActiveQuestions();
+      const sitConfig = SITUATIONS[displaySit] || {};
+
+      const answersWithWrong = [];
+      for (const q of qs) {
+        const correct = answers[q.id];
+        const wrong = await generateWrongAnswers(q.text, correct, displaySit);
+        answersWithWrong.push({
+          question: q.text,
+          correctAnswer: correct,
+          reasoning: (answers[`${q.id}_reasoning`] || '').trim(),
+          wrongAnswers: wrong
+        });
+      }
+
+      const labeled = {
+        sceneId:   currentCase.sceneId,
+        situation: empty ? 'empty' : displaySit,
+        timeSpan:  sitConfig.timeSpan || '',
+        answers:   answersWithWrong,
+        labeler:   labelerName
+      };
+
+      const newLabeled = [...labeledCases, labeled];
+      setLabeledCases(newLabeled);
+      saveProgress(newLabeled, casesData);
+
+      // Notificar al servidor (no crítico)
+      try {
+        const base = imageBaseUrl.replace(/\/$/, '');
+        await fetch(`${base}/api/complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ labeler: labelerName, sceneId: currentCase.sceneId, label: labeled })
+        });
+      } catch (e) { /* no critical */ }
+
+      setSubmitting(false);
+      moveToNextCase(newLabeled);
+    };
+
+    // ── Navegar al siguiente ───────────────────────────────────────────────
+    const moveToNextCase = (newLabeled) => {
+      setAnswers({});
+      setConfirmedSituation(null);
+      setEmptyQuestions([]);
+      setPickingSituation(false);
+      setValidationError('');
+      const next = findNextUnlabeledIndex(newLabeled);
+      if (next !== -1) {
+        setCurrentCaseIndex(next);
+      } else {
+        setMode('complete');
+      }
+    };
+
+    // ── Guardar y salir ────────────────────────────────────────────────────
+    const saveAndExit = async () => {
+      // Si hay respuestas parciales en el caso actual, preguntar
+      if (confirmedSituation && Object.keys(answers).length > 0) {
+        const go = window.confirm('You have unsaved answers for this case.\n\nExit anyway? (answers for this case will be lost)');
+        if (!go) return;
+      }
+      exportToExcel();
+      setMode('setup');
+      setConfirmedSituation(null);
+      setEmptyQuestions([]);
+      setAnswers({});
+      setValidationError('');
+    };
+
+    // ── Export Excel ───────────────────────────────────────────────────────
+    const exportToExcel = () => {
+      if (labeledCases.length === 0) { alert('No cases labeled yet'); return; }
+      const rows = [];
+      labeledCases.forEach(lc => {
+        if (lc.situation === 'empty' && (!lc.answers || lc.answers.length === 0)) {
+          rows.push({ 'Labeler': lc.labeler || '', 'Scene ID': lc.sceneId, 'Situation': 'empty', 'Question': '', 'Correct Answer': '', 'Reasoning': '', 'Wrong Answer 1': '', 'Wrong Answer 2': '', 'Wrong Answer 3': '', 'Time Span': '' });
+        } else {
+          (lc.answers || []).forEach(ans => {
+            rows.push({
+              'Labeler': lc.labeler || '',
+              'Scene ID': lc.sceneId,
+              'Situation': lc.situation,
+              'Question': ans.question,
+              'Correct Answer': ans.correctAnswer,
+              'Reasoning': ans.reasoning || '',
+              'Wrong Answer 1': ans.wrongAnswers[0] || '',
+              'Wrong Answer 2': ans.wrongAnswers[1] || '',
+              'Wrong Answer 3': ans.wrongAnswers[2] || '',
+              'Time Span': lc.timeSpan
+            });
+          });
+        }
+      });
+      const ws = XLSX.utils.json_to_sheet(rows);
+      ws['!cols'] = Object.keys(rows[0] || {}).map(k => ({ wch: Math.max(k.length + 2, 20) }));
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Labeled Data');
+      const tagSuffix = datasetTag ? `_${datasetTag}` : '';
+      XLSX.writeFile(wb, `labeled_${(labelerName || 'labeler').replace(/\s+/g, '_')}${tagSuffix}_${new Date().toISOString().split('T')[0]}.xlsx`);
+    };
+
+    const clearProgress = () => {
+      if (window.confirm('Delete all local progress? This action cannot be undone.')) {
+        localStorage.removeItem('labeling-progress');
+        setLabeledCases([]);
+        setCasesData([]);
+      }
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // RENDER: Setup
+    // ═══════════════════════════════════════════════════════════════════════
+    const renderSetup = () => {
+      const canStart = !!labelerName.trim() && casesData.length > 0;
+      const pendingCount = casesData.filter(c => !labeledIds.has(c.sceneId)).length;
+      return (
+        <div className="setup-screen">
+          <h2>🚗 Dataset Labeling Setup</h2>
+          <div className="setup-instructions">
+            <h3 style={{ marginBottom: '0.75rem' }}>How it works</h3>
+            <ol>
+              <li>The host starts the server: <code>python servidor_colaborativo.py --images /ruta/final_events_def</code></li>
+              <li>Open the server URL in your browser</li>
+              <li>Enter your name and click <strong>Request cases</strong></li>
+              <li>The server assigns exclusive cases with no overlaps</li>
+              <li>When done, download your Excel and send it to the host</li>
+            </ol>
+          </div>
+
+          <div className="input-group">
+            <label>👤 Your name (will appear in the Excel)</label>
+            <input type="text" value={labelerName} onChange={e => setLabelerName(e.target.value)} placeholder="e.g. Maria García" />
+          </div>
+
+          <hr className="section-divider" />
+
+          <div className="input-group">
+            <label>🌐 Server URL</label>
+            <input type="text" value={imageBaseUrl} onChange={e => setImageBaseUrl(e.target.value.trim())} placeholder="http://localhost:5000" />
+            <small>Local: <code>http://localhost:5000</code> · Red: <code>http://192.168.x.x:5000</code></small>
+          </div>
+
+          {serverStatus === 'error' && <div className="alert alert-danger">❌ Cannot connect. Start the server and try again.</div>}
+          {serverStatus === 'ok' && <div className="alert alert-success">✓ Servidor conectado correctamente</div>}
+
+          <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: 500, fontSize: '0.9rem' }}>📦 Batch size</label>
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                {[10, 20, 30, 50].map(n => (
+                  <button key={n} onClick={() => setBatchSize(n)} style={{
+                    padding: '0.5rem 1rem', borderRadius: '8px', fontWeight: '600', fontSize: '0.9rem', cursor: 'pointer',
+                    border: `2px solid ${batchSize === n ? 'var(--primary)' : 'var(--border)'}`,
+                    background: batchSize === n ? 'var(--primary)' : 'var(--bg-main)',
+                    color: batchSize === n ? 'white' : 'var(--text-secondary)'
+                  }}>{n}</button>
+                ))}
+                <input type="number" min="1" max="500" value={batchSize}
+                  onChange={e => setBatchSize(Math.max(1, parseInt(e.target.value) || 1))}
+                  style={{ width: '70px', padding: '0.5rem', background: 'var(--bg-main)', border: `2px solid var(--border)`, borderRadius: '8px', color: 'var(--text-primary)', fontSize: '0.9rem', textAlign: 'center' }} />
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <button className="btn btn-primary" onClick={() => autoDetectCases(true)} disabled={!imageBaseUrl.trim() || loading || !labelerName.trim()}>
+                {loading ? '⏳ Cargando...' : casesData.length > 0 ? `➕ Request ${batchSize} more cases` : `🔍 Request ${batchSize} casos`}
+              </button>
+              {casesData.length > 0 && (
+                <button className="btn btn-secondary" onClick={() => autoDetectCases(false)} disabled={loading} style={{ fontSize: '0.85rem', padding: '0.5rem 1rem' }}>
+                  🔄 Reload my current cases
+                </button>
+              )}
+            </div>
+            {casesData.length > 0 && (
+              <span style={{ color: 'var(--success)', alignSelf: 'flex-end', paddingBottom: '0.4rem' }}>
+                ✓ {casesData.length} assigned · {pendingCount} pending
+                {freeCasesOnServer !== null && ` · ${freeCasesOnServer} free`}
+              </span>
+            )}
+          </div>
+
+          {casesData.length > 0 && (
+            <div className="input-group">
+              <label>📋 Assigned cases (read only)</label>
+              <textarea value={casesData.map(c => `${c.sceneId}  [${labeledIds.has(c.sceneId) ? '✓ done' : 'pending'}]`).join('\n')} readOnly rows={6} style={{ opacity: 0.7 }} />
+            </div>
+          )}
+
+          {labeledCases.length > 0 && (
+            <div className="alert alert-info">
+              💾 {labeledCases.length} cases already completed and saved locally. They will be skipped automatically.
+            </div>
+          )}
+
+          <div className="action-buttons">
+            {labeledCases.length > 0 && (
+              <button className="btn btn-danger" onClick={clearProgress} style={{ marginRight: 'auto' }}>🗑 Clear progress</button>
+            )}
+            {labeledCases.length > 0 && (
+              <button className="btn btn-secondary" onClick={exportToExcel}>📥 Download partial Excel</button>
+            )}
+            <button className="btn btn-primary" onClick={startLabeling} disabled={!canStart || loading}
+              title={!labelerName.trim() ? 'Enter your name' : !casesData.length ? 'Load cases first' : ''}>
+              {pendingCount === 0 && casesData.length > 0 ? '✓ View summary' : 'Start labeling →'}
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // RENDER: Labeling
+    // ═══════════════════════════════════════════════════════════════════════
+    const renderLabeling = () => {
+      const currentCase = getCurrentCase();
+      if (!currentCase) {
+        // Guard: no debería ocurrir, pero por si acaso
+        return (
+          <div className="setup-screen">
+            <div className="alert alert-warning">No active case. Go back to start.</div>
+            <button className="btn btn-primary" onClick={() => setMode('setup')}>← Back</button>
+          </div>
+        );
+      }
+
+      const images = getImageUrls();
+      const displaySit = getDisplaySituation() || currentCase.prelabel;
+      const empty = isMarkedEmpty();
+      const qs = getActiveQuestions();
+      const sitConfig = SITUATIONS[displaySit] || {};
+      const progress = casesData.length > 0 ? ((labeledCases.length / casesData.length) * 100).toFixed(1) : 0;
+      const allAnswered = qs.length > 0 && qs.every(q => answers[q.id] !== undefined && answers[q.id] !== '' && (answers[`${q.id}_reasoning`] || '').trim());
+
+      return (
+        <div className="labeling-screen">
+          {/* Progress bar */}
+          <div className="progress-bar">
+            <div className="progress-info">
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                <span>Progress: {labeledCases.length} / {casesData.length}</span>
+                <span className="labeler-badge">👤 {labelerName}</span>
+              </div>
+              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>{progress}%</span>
+                <button className="btn btn-secondary" onClick={saveAndExit} disabled={submitting}
+                  style={{ padding: '0.4rem 1rem', fontSize: '0.85rem' }}>
+                  💾 Save and exit
+                </button>
+              </div>
+            </div>
+            <div className="progress-track">
+              <div className="progress-fill" style={{ width: `${progress}%` }} />
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="stats">
+            <div className="stat-card">
+              <div className="stat-value" style={{ fontSize: '1rem' }}>{currentCase.sceneId}</div>
+              <div className="stat-label">Scene ID</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value" style={{ fontSize: '1rem' }}>{currentCase.prelabel}</div>
+              <div className="stat-label">Pre-label</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">{casesData.length - labeledCases.length}</div>
+              <div className="stat-label">Remaining</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">{labeledCases.length}</div>
+              <div className="stat-label">Completed</div>
+            </div>
+          </div>
+
+          {/* Images */}
+          <div className={`image-viewer${confirmedSituation || pickingSituation ? ' image-viewer-sticky' : ''}`}>
+            <h3 style={{ marginBottom: '1rem' }}>📷 Images · click to enlarge</h3>
+            {images.length === 0
+              ? <div className="alert alert-warning">No images found for this case.</div>
+              : <div className="image-grid">
+                  {images.map((url, idx) => (
+                    <ImageWithFallback key={idx} src={url} alt={`Img ${idx + 1}`} onClick={() => setZoomedImage(url)} />
+                  ))}
+                </div>
+            }
+          </div>
+
+          {/* Question form */}
+          <div className="question-form">
+
+            {/* PASO 1A: Confirmación de situación (prelabel != empty) */}
+            {!confirmedSituation && !pickingSituation && currentCase.prelabel.toLowerCase() !== 'empty' && (
+              <div className="question-section">
+                <h3>Is the situation correct?</h3>
+                <div className="question-text">
+                  Do the images correspond to: <strong>"{currentCase.prelabel}"</strong>?
+                </div>
+                <div className="alert alert-info" style={{ fontSize: '0.9rem' }}>
+                  💡 If you select <strong>"Does not match"</strong>, the case will be marked as <code>empty</code> and you will receive 4 questions from the global bank.
+                </div>
+                <div className="action-buttons" style={{ justifyContent: 'flex-start', marginTop: '1rem' }}>
+                  <button className="btn btn-success" onClick={() => handleSituationConfirmation(true)}>✓ Yes, correct</button>
+                  <button className="btn btn-secondary" onClick={() => handleSituationConfirmation(false)}>✗ Does not match → mark as empty</button>
+                </div>
+              </div>
+            )}
+
+            {/* PASO 1B: El prelabel ES empty → confirmar o reclasificar */}
+            {!confirmedSituation && !pickingSituation && currentCase.prelabel.toLowerCase() === 'empty' && (
+              <div className="question-section">
+                <h3>This case is pre-labeled as <span className="empty-badge">empty</span></h3>
+                <div className="question-text" style={{ marginTop: '1rem' }}>
+                  Do the images confirm this is an empty / no relevant situation case?
+                </div>
+                <div className="alert alert-info" style={{ fontSize: '0.9rem' }}>
+                  💡 If it is <strong>empty</strong> you will receive 4 questions from the global bank.<br/>
+                  If <strong>not empty</strong>, you can choose the correct situation from the 11 available.
+                </div>
+                <div className="action-buttons" style={{ justifyContent: 'flex-start', marginTop: '1rem' }}>
+                  <button className="btn btn-success" onClick={() => handleSituationConfirmation(true)}>✓ Yes, it is empty</button>
+                  <button className="btn btn-primary" onClick={() => handleSituationConfirmation(false)}>🔍 No, choose real situation →</button>
+                </div>
+              </div>
+            )}
+
+            {/* PASO 1C: Selector manual de situación (flujo D) */}
+            {pickingSituation && (
+              <div className="question-section">
+                <h3>Which situation matches these images?</h3>
+                <div className="question-text" style={{ marginBottom: '1.5rem' }}>
+                  Choose the situation that best describes what you see:
+                </div>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                  gap: '0.75rem',
+                  marginBottom: '1.5rem'
+                }}>
+                  {Object.keys(SITUATIONS).map(sitName => (
+                    <button key={sitName}
+                      onClick={() => handleManualSituationPick(sitName)}
+                      style={{
+                        padding: '0.85rem 1rem',
+                        background: 'var(--bg-main)',
+                        border: '2px solid var(--border)',
+                        borderRadius: '10px',
+                        color: 'var(--text-primary)',
+                        fontSize: '0.92rem',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.15s',
+                        lineHeight: '1.3',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.background = 'rgba(37,99,235,0.08)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.background = 'var(--bg-main)'; }}
+                    >
+                      {sitName}
+                    </button>
+                  ))}
+                </div>
+                <div className="action-buttons" style={{ justifyContent: 'flex-start' }}>
+                  <button className="btn btn-secondary"
+                    onClick={() => { setPickingSituation(false); setConfirmedSituation(null); }}>
+                    ← Back
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* PASO 2: Preguntas */}
+            {confirmedSituation && (
+              <>
+                {empty ? (
+                  <div className="alert alert-warning" style={{ marginBottom: '1.5rem' }}>
+                    ⚠️ Marcado como <strong>EMPTY</strong>
+                    <span className="empty-badge">empty</span>
+                    — Please answer 4 questions from the global question bank.
+                  </div>
+                ) : (
+                  <div className="alert alert-success" style={{ marginBottom: '1.5rem' }}>
+                    ✓ Situation confirmed: <strong>{displaySit}</strong> · Time span: {sitConfig.timeSpan}
+                  </div>
+                )}
+
+                {qs.length === 0 ? (
+                  <div className="alert alert-danger">
+                    ⚠️ No questions found for situation "{displaySit}". Check SITUATIONS in the code.
+                  </div>
+                ) : (
+                  qs.map((q, idx) => (
+                    <div key={q.id} className="question-section">
+                      <h3>
+                        {empty
+                          ? `🎲 Pregunta ${idx + 1} de ${EMPTY_Q_PER_CASE} · ${q.situation}`
+                          : `Pregunta ${idx + 1} de ${qs.length}`}
+                      </h3>
+                      <div className="question-text">{q.text}</div>
+                      <div className="example-answer">
+                        <strong>💡 Ejemplo de razonamiento:</strong>
+                        {q.example}
+                      </div>
+
+                      {q.type === 'yes_no' && (
+                        <div className="radio-group">
+                          {['Yes', 'No'].map(opt => (
+                            <div className="radio-option" key={opt}>
+                              <input type="radio" id={`${q.id}-${opt}`} name={q.id}
+                                checked={answers[q.id] === opt}
+                                onChange={() => handleAnswerChange(q.id, opt)} />
+                              <label htmlFor={`${q.id}-${opt}`}>{opt}</label>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {q.type === 'green_red' && (
+                        <div className="radio-group">
+                          {['Green', 'Red'].map(opt => (
+                            <div className="radio-option" key={opt}>
+                              <input type="radio" id={`${q.id}-${opt}`} name={q.id}
+                                checked={answers[q.id] === opt}
+                                onChange={() => handleAnswerChange(q.id, opt)} />
+                              <label htmlFor={`${q.id}-${opt}`}>{opt === 'Green' ? '🟢 Green' : '🔴 Red'}</label>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {q.type === 'number' && (
+                        <div className="input-group" style={{ marginBottom: 0 }}>
+                          <input type="number" value={answers[q.id] || ''}
+                            onChange={e => handleAnswerChange(q.id, e.target.value)}
+                            placeholder="ej. 50" style={{ maxWidth: '200px' }} />
+                        </div>
+                      )}
+
+                      <div className="input-group" style={{ marginTop: '1rem', marginBottom: 0 }}>
+                        <label style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
+                          ✍️ Your reasoning <span style={{ color: 'var(--danger)', fontSize: '0.8rem' }}>*required</span>
+                        </label>
+                        <textarea
+                          value={answers[`${q.id}_reasoning`] || ''}
+                          onChange={e => handleAnswerChange(`${q.id}_reasoning`, e.target.value)}
+                          placeholder="Explain what you see in the images that leads you to this answer..."
+                          rows="2"
+                          style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.9rem', resize: 'vertical' }}
+                        />
+                      </div>
+                    </div>
+                  ))
+                )}
+
+                {/* Error de validación */}
+                {validationError && (
+                  <div className="alert alert-danger" style={{ marginTop: '1rem' }}>
+                    ⚠️ {validationError}
+                  </div>
+                )}
+
+                <div className="action-buttons">
+                  <button className="btn btn-secondary"
+                    onClick={() => { setConfirmedSituation(null); setEmptyQuestions([]); setPickingSituation(false); setAnswers({}); setValidationError(''); }}
+                    disabled={submitting}>
+                    ← Back
+                  </button>
+                  <button className="btn btn-warn" onClick={saveAndExit} disabled={submitting}>
+                    💾 Save and exit
+                  </button>
+                  <button className="btn btn-primary" onClick={submitCase}
+                    disabled={submitting || qs.length === 0}
+                    title={!allAnswered ? 'Complete all answers and reasoning' : ''}>
+                    {submitting ? '⏳ Generating wrong answers...' : 'Save and continue →'}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // RENDER: Complete
+    // ═══════════════════════════════════════════════════════════════════════
+    const renderComplete = () => (
+      <div className="setup-screen">
+        <h2>🎉 Batch complete!</h2>
+        <div className="stats" style={{ marginTop: '2rem' }}>
+          <div className="stat-card"><div className="stat-value">{labeledCases.length}</div><div className="stat-label">Total labeled</div></div>
+          <div className="stat-card"><div className="stat-value">{labeledCases.filter(c => c.situation !== 'empty').length}</div><div className="stat-label">With real situation</div></div>
+          <div className="stat-card"><div className="stat-value">{labeledCases.filter(c => c.situation === 'empty').length}</div><div className="stat-label">Marked empty</div></div>
+        </div>
+        <div className="alert alert-success" style={{ marginTop: '2rem' }}>
+          You have completed your batch, <strong>{labelerName}</strong>!
+          {freeCasesOnServer !== null && freeCasesOnServer > 0
+            ? ` There are ${freeCasesOnServer} free cases — you can request more.`
+            : ' No more cases available.'}
+        </div>
+        <div className="action-buttons" style={{ flexWrap: 'wrap', marginTop: '1.5rem' }}>
+          <button className="btn btn-success" onClick={exportToExcel}>📥 Download Excel</button>
+          {freeCasesOnServer !== null && freeCasesOnServer > 0 && (
+            <button className="btn btn-primary" onClick={async () => {
+              await autoDetectCases(true);
+              const next = findNextUnlabeledIndex(labeledCases);
+              if (next !== -1) { setCurrentCaseIndex(next); setMode('labeling'); }
+            }} disabled={loading}>
+              ➕ Request {batchSize} more cases
+            </button>
+          )}
+          <button className="btn btn-secondary" onClick={() => setMode('setup')}>← Back to start</button>
+        </div>
+      </div>
+    );
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ROOT RENDER
+    // ═══════════════════════════════════════════════════════════════════════
+    return (
+      <div className="app-container">
+        <div className="header">
+          <h1>Dataset Labeling System</h1>
+          <p>Collaborative labeling tool · Autonomous Driving Scenarios</p>
+        </div>
+        <div className="main-content">
+          {mode === 'setup'    && renderSetup()}
+          {mode === 'labeling' && renderLabeling()}
+          {mode === 'complete' && renderComplete()}
+        </div>
+
+        {/* Modal zoom de imágenes */}
+        {zoomedImage && (() => {
+          const imgs = getImageUrls();
+          const cur = imgs.indexOf(zoomedImage);
+          return (
+            <div className="modal" onClick={() => setZoomedImage(null)}>
+              <div className="modal-close" onClick={() => setZoomedImage(null)}>×</div>
+              <div style={{ position: 'absolute', top: '50%', left: '1.5rem', transform: 'translateY(-50%)' }}>
+                <button onClick={e => { e.stopPropagation(); if (cur > 0) setZoomedImage(imgs[cur - 1]); }}
+                  disabled={cur <= 0}
+                  style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: '2rem', borderRadius: '50%', width: '52px', height: '52px', cursor: cur <= 0 ? 'default' : 'pointer', opacity: cur <= 0 ? 0.3 : 1 }}>‹</button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }} onClick={e => e.stopPropagation()}>
+                <img src={zoomedImage} alt="Zoomed" style={{ maxWidth: '85vw', maxHeight: '82vh', borderRadius: '12px' }} />
+                <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Image {cur + 1} of {imgs.length}</div>
+              </div>
+              <div style={{ position: 'absolute', top: '50%', right: '1.5rem', transform: 'translateY(-50%)' }}>
+                <button onClick={e => { e.stopPropagation(); if (cur < imgs.length - 1) setZoomedImage(imgs[cur + 1]); }}
+                  disabled={cur >= imgs.length - 1}
+                  style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: '2rem', borderRadius: '50%', width: '52px', height: '52px', cursor: cur >= imgs.length - 1 ? 'default' : 'pointer', opacity: cur >= imgs.length - 1 ? 0.3 : 1 }}>›</button>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Spinner de submit */}
+        {submitting && (
+          <div className="modal">
+            <div className="loading">
+              <div className="spinner" />
+              <p>Generating wrong answers with AI...</p>
+              <small style={{ marginTop: '0.5rem', opacity: 0.6 }}>A few seconds per question</small>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>

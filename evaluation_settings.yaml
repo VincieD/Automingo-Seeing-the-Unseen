@@ -1,0 +1,81 @@
+models:
+#  openai:gpt-5.4:
+#    provider: openai
+#    model_id: gpt-5.4
+#    trust_remote_code: false
+#    dtype: auto
+#    default_max_new_tokens: 1024
+#
+#  google:gemini-3.1-pro:
+#    provider: gemini
+#    model_id: gemini-3.1-pro-preview
+#    trust_remote_code: false
+#    dtype: auto
+#    default_max_new_tokens: 1024
+#
+#  anthropic:claude-4-sonnet:
+#    provider: anthropic
+#    model_id: claude-sonnet-4-6
+#    trust_remote_code: false
+#    dtype: auto
+#    default_max_new_tokens: 1024
+
+  llava-1.5-7b:
+    provider: hf
+    model_id: llava-hf/llava-1.5-7b-hf
+    trust_remote_code: false
+    dtype: auto
+    default_max_new_tokens: 256
+
+  qwen2.5-vl-7b:
+    provider: hf
+    model_id: Qwen/Qwen2.5-VL-7B-Instruct
+    trust_remote_code: false
+    dtype: auto
+    default_max_new_tokens: 256
+
+  qwen3-vl-8b:
+    provider: hf
+    model_id: Qwen/Qwen3-VL-8B-Instruct
+    trust_remote_code: false
+    dtype: auto
+    default_max_new_tokens: 256
+
+  cosmos-reason1-7b:
+    provider: hf
+    model_id: nvidia/Cosmos-Reason1-7B
+    trust_remote_code: true
+    dtype: auto
+    default_max_new_tokens: 256
+
+  idefics3-8b:
+    provider: hf
+    model_id: HuggingFaceM4/Idefics3-8B-Llama3
+    trust_remote_code: false
+    dtype: auto
+    default_max_new_tokens: 256
+
+  internvl3_5-8b:
+    provider: hf
+    model_id: OpenGVLab/InternVL3_5-8B-HF
+    trust_remote_code: true
+    dtype: auto
+    default_max_new_tokens: 256
+
+  molmo2-8b:
+    provider: hf
+    model_id: allenai/Molmo2-8B
+    trust_remote_code: true
+    dtype: auto
+    default_max_new_tokens: 256
+
+  automingo-vl-8b:
+    provider: hf
+    model_id: /auto/plzen4-ntis/projects/korpusy_cv/Automingo/checkpoint_qwen3_vl_final
+    trust_remote_code: true
+    dtype: auto
+    default_max_new_tokens: 256
+
+settings:
+  multi_choice_prompting: true
+  debug: false

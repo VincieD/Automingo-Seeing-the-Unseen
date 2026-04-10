@@ -1,0 +1,610 @@
+{
+    "qwen3-vl-8b": {
+        "provider": "hf",
+        "samples": [
+            {
+                "sample_idx": 0,
+                "prompt": "Are construction-related signs, cones, temporary signals, or closed lanes visible in the scene?\n\nOptions:\n1. The scene shows a clear highway with no obstructions or construction work.\n2. There are only regular traffic signs present, with no indication of construction activity.\n3. Yes, There is a construction red and white fence clearly indicating that we are near a construction site\n4. The area appears to be a residential zone with no construction signs or barriers in sight.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are red and white fences on both sides of the road indicating a construction zone",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 1,
+                "prompt": "Are temporary yellow lane markings visible?\n\nOptions:\n1. There are temporary yellow lane markings visible, indicating a construction zone ahead.\n2. Yes, the temporary yellow lane markings are clearly visible.\n3. No, No temporary yellow lines are visible but neither usual white ones\n4. The temporary yellow lane markings are partially visible but faded.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are no visible lane markings at all.",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 2,
+                "prompt": "Are road workers visible on or near the roadway?\n\nOptions:\n1. Yes, a crew of road workers is visible repairing the road surface.\n2. Yes, there are road workers setting up safety cones along the roadway.\n3. Yes, several road workers are actively directing traffic in the area.\n4. No, There are no visible road workers near the scene only red and white construction scene\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are no visible road workers near the scene, only red and white construction scene",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 3,
+                "prompt": "Is the ego lane narrowed or laterally shifted due to construction elements?\n\nOptions:\n1. Yes, but the lane is widened instead of narrowed.\n2. No, the construction elements are located far from the ego lane.\n3. No, the lane remains unchanged and clear for driving.\n4. Yes, The ego lane is narrowed due to the presence of a construction fence\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthe ego lane is narrowed due to the presence of a construction fence",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 4,
+                "prompt": "Is construction machinery or heavy equipment present near or within the roadway?\n\nOptions:\n1. No, No construction machinery is visible near the cene\n2. Yes, a crane is actively lifting materials above the roadway.\n3. Yes, there appears to be a bulldozer parked on the side of the road.\n4. Yes, construction cones and barriers indicate ongoing work in the area.\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are red and white plastic barriers on both sides of the roadway",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 5,
+                "prompt": "Is a temporary reduced speed limit sign visible in the scene?\n\nOptions:\n1. Yes, there is a speed limit sign indicating a reduced speed of 25 mph.\n2. The scene shows a permanent speed limit sign set at 35 mph.\n3. A temporary speed limit sign is partially obscured by the construction fence.\n4. No, There is not a speed limit sign visible just some trees and red and white construction fence\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere is no speed limit sign visible in the scene.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 6,
+                "prompt": "Are construction-related signs, cones, temporary signals, or closed lanes visible in the scene?\n\nOptions:\n1. Yes, the scene includes multiple construction signs warning drivers of lane changes.\n2. Yes, there are several traffic cones marking the construction zone.\n3. No, red and white movable barriers are visible which are limiting the lane from a construction ground\n4. Yes, a temporary stop sign is placed ahead of the construction area.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nred and white movable barriers are visible which are limiting the lane from a construction ground",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 7,
+                "prompt": "Are temporary yellow lane markings visible?\n\nOptions:\n1. Yes, the lane markings are faded but still visible.\n2. No, no lane lines are visible at all\n3. Yes, the yellow lane markings are clearly visible despite the temporary nature.\n4. Yes, there are temporary lane markings, but they are in a different color.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthere are no visible lane markings at all.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 8,
+                "prompt": "Are road workers visible on or near the roadway?\n\nOptions:\n1. No, no persons are visible at all\n2. Road workers are present but obscured by construction equipment.\n3. Some road workers are taking a break on the sidewalk.\n4. There are road workers visible in the distance.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nno person is visible in the sequence of pictures.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 9,
+                "prompt": "Is the ego lane narrowed or laterally shifted due to construction elements?\n\nOptions:\n1. There is clear evidence of lateral shifting as the lane markings are obscured by construction materials.\n2. No, the ego lane does not look narrow and no lateral shifting is evident\n3. The ego lane appears to be significantly narrowed due to the presence of construction barriers.\n4. The narrowing of the ego lane is indicated by the reduced space between the lane markings and the construction zone.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthe ego lane appears to be significantly narrowed due to the presence of construction barriers.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 10,
+                "prompt": "Is construction machinery or heavy equipment present near or within the roadway?\n\nOptions:\n1. A bulldozer is parked on the side of the road, obstructing traffic.\n2. Roadwork is in progress, and heavy trucks are actively moving materials on the roadway.\n3. No, no construction machinery is present, only cars participating in the traffic\n4. There is a construction site nearby with several cranes operating on the road.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are no construction machines or heavy equipment present",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 11,
+                "prompt": "Is a temporary reduced speed limit sign visible in the scene?\n\nOptions:\n1. A digital sign is flashing a temporary reduced speed limit for upcoming road work.\n2. There is a permanent speed limit sign indicating a lower speed for construction zones.\n3. A temporary reduced speed limit sign is partially obscured by foliage.\n4. No, no temporary or other construction-related signs are visible\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nno construction related signs are visible",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 12,
+                "prompt": "Are construction-related signs, cones, temporary signals, or closed lanes visible in the scene?\n\nOptions:\n1. There are only pedestrian crossing signs present, indicating no construction activity.\n2. The area is fully marked with speed limit signs, suggesting no construction work is happening.\n3. The scene shows a clear road with no obstructions or signals.\n4. Yes, There is a red and white fence on the left indicating there are works ongoing\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere is a red and white fence on the left indicating there are works ongoing",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 13,
+                "prompt": "Are temporary yellow lane markings visible?\n\nOptions:\n1. Yes, but they are permanently painted and cannot change.\n2. Yes, They are present but the yellow color is not recent so it is not very clear\n3. No, they are completely faded and unnoticeable.\n4. No, the lane markings are actually red, not yellow.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthe lane markings are yellow but faded",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 14,
+                "prompt": "Are road workers visible on or near the roadway?\n\nOptions:\n1. They are wearing dark clothing and standing in the shadows, making them difficult to spot.\n2. They are located on the opposite side of the highway, far from the ego lane.\n3. They are fully obscured by construction barriers and cannot be seen from the vehicle.\n4. Yes, They are on the left side with green or highlighted yellow but not too close to the ego lane\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are construction workers on the left side of the ego lane, but they are not close to the ego lane.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 15,
+                "prompt": "Is the ego lane narrowed or laterally shifted due to construction elements?\n\nOptions:\n1. No, Construction elements are not on ego lane, they are on the left side and belong to the opposite direction way of the street\n2. The ego lane is narrowed because of the construction barriers on the right side.\n3. Yes, the construction elements are directly blocking the ego lane.\n4. The construction elements have shifted the ego lane to the left towards oncoming traffic.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthe construction elements are located on the left side of the road and are not affecting the ego lane.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 16,
+                "prompt": "Is construction machinery or heavy equipment present near or within the roadway?\n\nOptions:\n1. No, The construction elements do not include large elements\n2. Yes, there are multiple construction vehicles parked along the shoulder.\n3. Yes, construction signs and barriers are obstructing part of the roadway.\n4. Yes, there are large cranes and bulldozers actively working on the road.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are red and white construction barriers on the left side of the road.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 17,
+                "prompt": "Is a temporary reduced speed limit sign visible in the scene?\n\nOptions:\n1. No, There is a speed limit mark on the floor but not as a common vertical signal\n2. The speed limit is displayed on a digital billboard above the road.\n3. A police officer is manually directing traffic with a sign that shows a reduced speed limit.\n4. There is a vertical sign indicating a temporary reduced speed limit near the intersection.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthere is a 30 km/h speed limit sign painted on the road surface.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 18,
+                "prompt": "Are construction-related signs, cones, temporary signals, or closed lanes visible in the scene?\n\nOptions:\n1. There are only pedestrian crossing signs and no construction-related indicators.\n2. Yes, construction-related yellow signs, movable red and white barriers, and temporary lanes are visible in the scene\n3. Only permanent traffic signals are visible, indicating no construction work.\n4. The scene shows a clear road with no obstructions or signs present.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthere are yellow construction-related signs and red and white movable barriers",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 19,
+                "prompt": "Are temporary yellow lane markings visible?\n\nOptions:\n1. The lane markings are visible but are white, indicating normal traffic flow.\n2. The yellow lane markings are permanent and do not change.\n3. No, the lane markings are obscured by construction barriers.\n4. Yes, Yellow lane lines become visible towards the end of the sequence, indicating a temporary traffic layout\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nyellow lane lines become visible towards the end of the sequence, indicating a temporary traffic layout",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 20,
+                "prompt": "Are road workers visible on or near the roadway?\n\nOptions:\n1. No, no persons are visible at all\n2. There are road workers visible in the distance, but they are not on the roadway.\n3. Road workers are present, but they are standing on the sidewalk.\n4. There are road workers visible, but they are behind a construction barrier.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\na person wearing a yellow vest is visible standing on the sidewalk to the left of the white truck.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 21,
+                "prompt": "Is the ego lane narrowed or laterally shifted due to construction elements?\n\nOptions:\n1. No, the lane remains the same width throughout the turn.\n2. No, the lane is actually widened to accommodate additional traffic during construction.\n3. Yes, After the right turn there are temporary lane markings which appear to be quite narrow. After the turn, red and white movable barriers on the left limit the overall size of the lanes\n4. Yes, but the construction elements are only present on the opposite side of the road.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are red and white movable barriers on the left side of the road after the right turn, which limit the overall size of the lanes.",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 22,
+                "prompt": "Is construction machinery or heavy equipment present near or within the roadway?\n\nOptions:\n1. There is a bulldozer parked on the shoulder of the road.\n2. No, No construction related heavy equipment is evident\n3. A crane is actively lifting materials over the traffic lanes.\n4. Construction barriers are set up, indicating ongoing work in the area.\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are red and white construction barriers present on the right side of the roadway.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 23,
+                "prompt": "Is a temporary reduced speed limit sign visible in the scene?\n\nOptions:\n1. Yes, A temporary yellow 20 speed limit sign is posted on the right before the work zone, together with a couple of other yellow temporary warning signs.\n2. The speed limit sign is permanently fixed and indicates a 30 mph limit.\n3. A temporary speed limit sign is visible, but it shows a speed of 25 mph.\n4. There is a sign indicating a speed limit of 15 mph, but it is not temporary.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthere is a temporary yellow 20 speed limit sign posted on the right before the work zone, together with a couple of other yellow temporary warning signs.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 24,
+                "prompt": "Is there any discontinuity in the ego lane ahead?\n\nOptions:\n1. No, there is a continuous lane marking indicating a smooth transition ahead.\n2. Yes, ego has in front one zebra crossing and after that a lane crossing with perpendicular lanes\n3. No, the ego lane is straight and uninterrupted for a long distance ahead.\n4. Yes, but the discontinuity is only temporary and not a concern for the ego vehicle.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthere is a zebra crossing ahead of the ego vehicle, which is followed by a lane crossing with perpendicular lanes.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 25,
+                "prompt": "Is any vehicle or pedestrian crossing the path of the ego vehicle from a different direction?\n\nOptions:\n1. Yes, 2 pedestrians are crossing in front ego\n2. The road is clear with no obstructions ahead of the ego vehicle.\n3. Only vehicles are approaching from the same direction as the ego vehicle.\n4. No pedestrians are visible in the vicinity of the ego vehicle.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\ntwo pedestrians are crossing in front of the ego vehicle.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 26,
+                "prompt": "Is there a vehicle ahead in the ego lane traveling in the same direction as the ego vehicle?\n\nOptions:\n1. No, the vehicle in front is parked and causing a traffic obstruction.\n2. Yes, there is a truck in the left lane blocking the view of the ego lane.\n3. No, White car is driving in the right lane from ego car\n4. Yes, the vehicle ahead is a motorcycle in the ego lane.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere is a white car in front of the ego vehicle in the same lane.",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 27,
+                "prompt": "Is there any crossing object in the ego lane ahead?\n\nOptions:\n1. A traffic cone has fallen into the lane but is not a crossing object.\n2. There is a bicycle parked on the side of the road.\n3. A car is waiting at a traffic light in the adjacent lane.\n4. Yes, 2 pedestrian are crossing in front ego\n\nAnswer (just the option number):",
+                "answer": "4\n\nyes\ntwo pedestrians are crossing the zebra crossing in front of the ego vehicle.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 28,
+                "prompt": "Is there any discontinuity in the ego lane ahead?\n\nOptions:\n1. No, the ego lane has a continuous flow with no crossing situations.\n2. No, the ego lane is clear with no intersections ahead.\n3. Yes, ego car is entering a crossing situation with perpendicular lanes present but not lanes in the road\n4. Yes, but the discontinuity is only temporary and won't affect the ego car.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are perpendicular lanes present but no lanes in the road",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 29,
+                "prompt": "Is any vehicle or pedestrian crossing the path of the ego vehicle from a different direction?\n\nOptions:\n1. No, there is only one vehicle approaching from behind.\n2. Yes, but they are all stationary and not crossing the path.\n3. Yes, Ego has 2 white perpendicular cars in front ego driving from the right to the left\n4. No, the road is clear with no vehicles or pedestrians nearby.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are two white cars crossing ego's path from right to left",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 30,
+                "prompt": "Is there a vehicle ahead in the ego lane traveling in the same direction as the ego vehicle?\n\nOptions:\n1. Yes, there is a vehicle ahead, but it is in a different lane.\n2. Yes, there is a vehicle ahead, but it is traveling in the opposite direction.\n3. Yes, there is a vehicle ahead but it is stationary.\n4. No, Ego does not have any leading vehicle in front, the only objects are 2 perpendicular cars\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are no vehicles ahead of the ego vehicle in its own lane.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 31,
+                "prompt": "Is there any crossing object in the ego lane ahead?\n\nOptions:\n1. There are no objects in the ego lane, only pedestrians on the sidewalk.\n2. Yes, Ego has 2 white perpendicular cars in front ego driving from the right to the left\n3. A large truck is blocking the lane ahead, but it's not in the ego lane.\n4. There are several bicycles in the adjacent lane, but none in the ego lane.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthere are two white cars crossing ego lane from right to left",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 32,
+                "prompt": "Is there any discontinuity in the ego lane ahead?\n\nOptions:\n1. Yes, there appears to be a construction zone ahead that disrupts the lane markings.\n2. Yes, the lane markings are faded and difficult to see, indicating a potential discontinuity.\n3. Yes, the traffic light is malfunctioning, suggesting that vehicles might not be able to follow the lane properly.\n4. No, Ego is standing on a traffic light while pedestrians are crossing, but the lane markings are expected\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are no discontinuities in the ego lane ahead",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 33,
+                "prompt": "Is any vehicle or pedestrian crossing the path of the ego vehicle from a different direction?\n\nOptions:\n1. Yes, Pedestrians are crossing from the left side in front ego while it is standing on a red traffic light\n2. No, the light is green and the ego vehicle has the right of way.\n3. No, the intersection is clear and there are no obstacles.\n4. Yes, but the pedestrians are waiting on the sidewalk and not crossing.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\npedestrians are crossing the ego lane from the left side.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 34,
+                "prompt": "Is there a vehicle ahead in the ego lane traveling in the same direction as the ego vehicle?\n\nOptions:\n1. No, Ego is standing on a middle lane in a red traffic light with other car standing on left lane and one bicycle on right lane\n2. Yes, there is a vehicle ahead merging into the ego lane from an adjacent lane.\n3. Yes, a motorcycle is ahead in the ego lane moving slowly.\n4. Yes, there is a car in front of the ego vehicle that is also stopped at the red light.\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere is a car in front of the ego vehicle that is also stopped at the red light.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 35,
+                "prompt": "Is there any crossing object in the ego lane ahead?\n\nOptions:\n1. No, there are only parked cars along the side of the road.\n2. No, the lane is completely clear with no obstacles.\n3. Yes, in front ego there are some pedestrian crossing from left side\n4. Yes, but they are not in the ego lane and will not affect driving.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are pedestrians crossing the ego lane from the left side",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 36,
+                "prompt": "Is there any discontinuity in the ego lane ahead?\n\nOptions:\n1. Yes, there is a merging lane from the right that disrupts the ego lane.\n2. No, There is not lane markings due to a construction site, but it is not due to a intersection road\n3. Yes, there is a sharp curve in the ego lane ahead.\n4. Yes, the lane markings are faded, indicating a discontinuity.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere is a sharp curve in the ego lane ahead.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 37,
+                "prompt": "Is any vehicle or pedestrian crossing the path of the ego vehicle from a different direction?\n\nOptions:\n1. No, the traffic light is green and there are no pedestrians in sight.\n2. Yes, t can be seen a traffic light in front ego with some pedestrians crossing the street\n3. Yes, but the pedestrians are on the opposite side of the street and not crossing.\n4. No, all vehicles are stationary and there is no cross traffic.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthere are pedestrians crossing the street in front of the ego vehicle.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 38,
+                "prompt": "Is there a vehicle ahead in the ego lane traveling in the same direction as the ego vehicle?\n\nOptions:\n1. Yes, there is a vehicle ahead but it is stationary.\n2. Yes, there is a vehicle ahead, but it is traveling in the opposite direction.\n3. Yes, there is a vehicle ahead, and it is merging into the ego lane.\n4. No, go is driving in a lane with no other cars driving in that unique lane. There are not adjacent lanes\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are no other vehicles ahead of the ego vehicle.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 39,
+                "prompt": "Is there any crossing object in the ego lane ahead?\n\nOptions:\n1. Yes, n front ego there are some pedestrians crossing in the traffic light\n2. There are vehicles parked in the ego lane, blocking the path.\n3. The traffic light is green, indicating no pedestrians should be crossing.\n4. A bicycle is moving alongside the ego lane but not crossing it.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthere are pedestrians crossing in front of the ego vehicle.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 40,
+                "prompt": "Is there any discontinuity in the ego lane ahead?\n\nOptions:\n1. No, there are only traffic lights ahead, which do not indicate any lane discontinuity.\n2. No, the road is completely straight without any interruptions.\n3. Yes, There is a Crosswalk\n4. Yes, but it's just a temporary construction sign that doesn't affect lane continuity.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere is a crosswalk ahead of the ego vehicle",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 41,
+                "prompt": "Is any vehicle or pedestrian crossing the path of the ego vehicle from a different direction?\n\nOptions:\n1. The traffic light is green, indicating that it is safe for the ego vehicle to proceed without any crossings.\n2. Yes, There is two people crossing the road in a crosswalk and a red traffic light\n3. There is a single cyclist riding parallel to the ego vehicle but not crossing its path.\n4. A car is parked on the side of the road, with no pedestrians or vehicles moving.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthere are two pedestrians crossing the road in a crosswalk and the traffic light is red",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 42,
+                "prompt": "Is there a vehicle ahead in the ego lane traveling in the same direction as the ego vehicle?\n\nOptions:\n1. No, but there is a motorcycle ahead that is swerving into the lane.\n2. Yes, there is a car in front of the ego vehicle that is moving slowly.\n3. Yes, a bus is stopped directly ahead in the ego lane.\n4. No, The ego vehicle is stopped right next to the crosswalk with no cars in front.\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are no other vehicles ahead of the ego vehicle.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 43,
+                "prompt": "Is there any crossing object in the ego lane ahead?\n\nOptions:\n1. There are cyclists riding in the adjacent lane, but none in the ego lane.\n2. Yes, There is two pedestrians crossing the road through a crosswalk.\n3. No, the lane is clear and there are no obstacles.\n4. A parked car is blocking the view, making it seem like the lane is clear.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\ntwo pedestrians are crossing the road through a crosswalk.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 44,
+                "prompt": "Is there any discontinuity in the ego lane ahead?\n\nOptions:\n1. Yes, Ego is standing in front of a cross section with no lanes in the road\n2. No, the road ahead has clearly marked lanes.\n3. No, the ego lane continues straight without interruption.\n4. Yes, but the lanes are just temporarily obscured by construction signs.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthe ego lane continues straight without interruption.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 45,
+                "prompt": "Is any vehicle or pedestrian crossing the path of the ego vehicle from a different direction?\n\nOptions:\n1. Only one pedestrian is waiting at the curb and not crossing.\n2. All vehicles are parked and not in motion near the ego vehicle.\n3. The pedestrians are walking on the sidewalk and not crossing the street.\n4. Yes, There are 3 pedestrians crossing in front of ego car\n\nAnswer (just the option number):",
+                "answer": "4\n\nyes\nthree pedestrians are crossing in front of the ego vehicle in the zebra crossing.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 46,
+                "prompt": "Is there a vehicle ahead in the ego lane traveling in the same direction as the ego vehicle?\n\nOptions:\n1. No, the ego is standing in front a pedestrian crossing with a red light active\n2. Yes, a delivery truck is stopped in the ego lane waiting to turn left.\n3. Yes, a motorcycle is slowly approaching the ego vehicle from behind.\n4. Yes, there is a vehicle that just passed the ego vehicle at high speed.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthe ego vehicle is stationary at a red traffic light.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 47,
+                "prompt": "Is there any crossing object in the ego lane ahead?\n\nOptions:\n1. No, the lane is clear with no pedestrians in sight.\n2. Yes, There are 3 pedestrians crossing in front ego\n3. There is a bicycle in the adjacent lane but none in the ego lane.\n4. Only a dog is seen in the lane, which is not a crossing object.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthree pedestrians are crossing the ego lane in front of the vehicle.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 48,
+                "prompt": "Is there any discontinuity in the ego lane ahead?\n\nOptions:\n1. There is a speed bump that does not affect the lane markings.\n2. The lane markings are intact and clearly visible.\n3. Yes, Lane markings are interrupted due to a crosswalk\n4. The lane merges into another lane smoothly without any interruptions.\n\nAnswer (just the option number):",
+                "answer": "3\n\nlane markings are interrupted due to a crosswalk",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 49,
+                "prompt": "Is any vehicle or pedestrian crossing the path of the ego vehicle from a different direction?\n\nOptions:\n1. Yes, but the pedestrian is waiting at the curb and hasn't started crossing.\n2. No, the road is clear and there are no pedestrians in sight.\n3. Yes, A pedestrian is crossing from left to right across the ego vehicle's trajectory using the crosswalk and the traffic light has already turned yellow\n4. No, a vehicle is parked on the side of the road and poses no threat to the ego vehicle.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\na pedestrian is crossing from left to right across the ego vehicle's trajectory using the crosswalk and the traffic light has already turned yellow",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 50,
+                "prompt": "Is there a vehicle ahead in the ego lane traveling in the same direction as the ego vehicle?\n\nOptions:\n1. No, There are no vehicles moving in the same direction as ego vehicle\n2. Yes, a vehicle is ahead but it's traveling in the opposite direction.\n3. Yes, a vehicle is ahead but it's merging into the ego lane.\n4. Yes, there is a vehicle ahead but it's stationary.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthere are no vehicles ahead of the ego vehicle.",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 51,
+                "prompt": "Is there any crossing object in the ego lane ahead?\n\nOptions:\n1. Yes, but the object is stationary and poses no threat.\n2. Yes, There is a person in the perpendicular direction of our ego car.\n3. No, there is a vehicle in the adjacent lane but not in our lane.\n4. No, the lane is clear and there are no obstacles ahead.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthere is a pedestrian crossing the road in front of the ego vehicle.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 52,
+                "prompt": "Is a vehicle from an adjacent lane moving into the ego lane?\n\nOptions:\n1. The red car is parked on the shoulder, not moving into the lane.\n2. Yes, There is a red car moving from the left into the ego car's lane\n3. The adjacent vehicle is slowing down and staying in its lane.\n4. The vehicle is merging into a lane further to the right, away from the ego lane.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\na red car is seen crossing into the ego lane from the left.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 53,
+                "prompt": "Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?\n\nOptions:\n1. A red vehicle has merged into the ego lane but is positioned behind another vehicle.\n2. Yes, A red vehicle has entered the ego lane directly ahead with no vehicle in between\n3. The red vehicle is in the adjacent lane and not in the ego lane at all.\n4. A blue vehicle has merged into the lane to the right of the ego vehicle.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthe red vehicle is clearly visible merging into the ego lane without any vehicle in between",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 54,
+                "prompt": "Is the ego vehicle currently inside a roundabout?\n\nOptions:\n1. No, The ego vehicle is not inside a roundabout nor near one\n2. The ego vehicle is approaching the entrance of the roundabout.\n3. Yes, the ego vehicle is currently navigating through the roundabout.\n4. The ego vehicle is on the exit lane of the roundabout.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthe ego vehicle is driving in a three-lane road with no roundabout in sight",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 55,
+                "prompt": "Is the ego vehicle currently within an intersection?\n\nOptions:\n1. The ego vehicle is within an intersection as it is following another car that just entered.\n2. The ego vehicle is in an intersection since it is making a left turn.\n3. The ego vehicle is in an intersection because it is stopped at a traffic light.\n4. No, There are no signs indicating the ego vehicle is currently within an intersection\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthe ego vehicle is driving in a three-lane motorway with no intersections or traffic lights",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 56,
+                "prompt": "Is any vehicle partially overlapping the lane boundary markings of the ego lane?\n\nOptions:\n1. No, all vehicles are completely within their designated lanes.\n2. Yes, A red vehicle is positioned partially over the dashed line on the left side of the ego lane.\n3. No, the lane boundary markings are not visible in this scenario.\n4. Yes, but the overlapping vehicle is in the adjacent lane, not the ego lane.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\na red vehicle is positioned partially over the dashed line on the left side of the ego lane.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 57,
+                "prompt": "Is a vehicle from an adjacent lane moving into the ego lane?\n\nOptions:\n1. The silver car is moving away from the ego lane.\n2. The silver car is merging into a lane further to the right.\n3. Yes, There is silver car moving from the left entering ego car's lane ahead of us\n4. The silver car is stationary in its own lane.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthe silver car is moving from the left into the ego lane.",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 58,
+                "prompt": "Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?\n\nOptions:\n1. The silver car is merging into the lane but is blocked by a motorcycle in front of the ego vehicle.\n2. The silver car is actually in a different lane and has not merged into the ego lane at all.\n3. Yes, The silver car is entering the ego lane without any intermediate vehicle between him and ego vehicle\n4. The silver car is merging behind another vehicle, creating an intermediate vehicle between it and the ego vehicle.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthe silver car is entering the ego lane without any intermediate vehicle between him and ego vehicle",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 59,
+                "prompt": "Is the ego vehicle currently inside a roundabout?\n\nOptions:\n1. The ego vehicle is approaching the entrance of the roundabout.\n2. The ego vehicle has just entered the roundabout and is navigating through it.\n3. The ego vehicle is in the middle of the roundabout, preparing to exit.\n4. No, There are no signs indicating that the vehicle is inside a roundabout.\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are no signs indicating that the vehicle is inside a roundabout",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 60,
+                "prompt": "Is the ego vehicle currently within an intersection?\n\nOptions:\n1. The ego vehicle has stopped at a traffic signal within the intersection.\n2. No, There are no crossing lanes marking indicating intersection, the car is clearly on a highway\n3. The ego vehicle is in a left-turn lane, indicating it is in the intersection.\n4. The ego vehicle is approaching the intersection at high speed.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthe ego vehicle is driving in a highway",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 61,
+                "prompt": "Is any vehicle partially overlapping the lane boundary markings of the ego lane?\n\nOptions:\n1. Yes, but the vehicle is in a different lane and does not affect the ego lane.\n2. No, the lane markings are not visible due to weather conditions.\n3. Yes, The silver car is overlapping the dashed line of ego's lane from the left\n4. No, all vehicles are well within their respective lanes.\n\nAnswer (just the option number):",
+                "answer": "3\n\nthe silver car is overlapping the dashed line of ego's lane from the left",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 62,
+                "prompt": "Is a vehicle from an adjacent lane moving into the ego lane?\n\nOptions:\n1. Yes, There is a truck that carries other cars moving into the ego lane\n2. The truck is actually moving away from the ego lane towards the exit.\n3. The vehicle is parked on the shoulder and not moving into the lane.\n4. The truck is maintaining its position in its own lane.\n\nAnswer (just the option number):",
+                "answer": "no\n\nreasoning:\nthere are no vehicles from the adjacent lanes moving into the ego lane",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 63,
+                "prompt": "Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?\n\nOptions:\n1. No, The cut in happens with a dark car between the truck and the ego vehicle\n2. Yes, the vehicle merged directly in front of the ego vehicle without any other vehicles present.\n3. No, the merging vehicle was actually behind the ego vehicle before it cut in.\n4. Yes, there was a brief gap with no vehicles, allowing the merging vehicle to enter the lane.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthere is a dark vehicle between the ego vehicle and the vehicle merging into ego lane",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 64,
+                "prompt": "Is the ego vehicle currently inside a roundabout?\n\nOptions:\n1. The ego vehicle is currently driving along the circular path of the roundabout.\n2. The ego vehicle is in a lane designated for vehicles exiting the roundabout.\n3. No, The vehicle is not ina roundabout as there are no sogns nor circular roadway that indicate it\n4. The ego vehicle is approaching the roundabout entrance.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are no circular roadway or signs indicating a roundabout",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 65,
+                "prompt": "Is the ego vehicle currently within an intersection?\n\nOptions:\n1. The ego vehicle is in a parking lot adjacent to the intersection.\n2. Yes, The ego vehicle is inside an intersection at the moment of the situation this is clearly indicated by crossing lanes and eventual absence of lanes\n3. The ego vehicle is on a one-way street leading away from the intersection.\n4. The ego vehicle is waiting at a traffic signal outside the intersection.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthe ego vehicle is clearly inside an intersection.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 66,
+                "prompt": "Is any vehicle partially overlapping the lane boundary markings of the ego lane?\n\nOptions:\n1. No, the truck is completely within its lane and not affecting the ego lane.\n2. Yes, The truck is overlapping the dashed lines in the back indicating a cut-in situation\n3. No, the lane markings are clear and the truck is well behind the boundary.\n4. Yes, but the vehicle is safely positioned in a neighboring lane without causing any issues.\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthe truck is clearly visible in the left lane, but it is not overlapping the ego lane boundary markings.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 67,
+                "prompt": "Is a vehicle from an adjacent lane moving into the ego lane?\n\nOptions:\n1. The white vehicle is actually moving parallel to the ego lane without changing lanes.\n2. Yes, white vehicle from the right lane is doing a cut in manouver therefore moving from its lane into ego lane\n3. The white vehicle is exiting the roadway and is not a threat to the ego lane.\n4. The white vehicle is merging into the lane behind the ego vehicle, not cutting in.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthe white vehicle from the right is moving into the ego lane.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 68,
+                "prompt": "Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?\n\nOptions:\n1. No, the merging vehicle was actually behind the ego vehicle when it changed lanes.\n2. Yes, right vehicle has entered ego lane directly ahead with no vehicle in between\n3. No, the vehicle merged into a lane adjacent to the ego lane, not directly ahead.\n4. Yes, but there was another vehicle in the ego lane that the merging vehicle passed first.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\na white car is seen entering the ego lane from the right without any vehicle in between",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 69,
+                "prompt": "Is the ego vehicle currently inside a roundabout?\n\nOptions:\n1. The ego vehicle is already navigating through the roundabout.\n2. The ego vehicle is approaching the entrance of the roundabout.\n3. No, It is driving in a 4 lane street in the city\n4. The ego vehicle is waiting to exit the roundabout.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are four lanes and no roundabout",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 70,
+                "prompt": "Is the ego vehicle currently within an intersection?\n\nOptions:\n1. Yes, it can be appreciated an intersecton after the trafic light. Crossing lanes and intersection markings are visible around the ego vehicle.\n2. The ego vehicle is in a parking lot adjacent to the intersection.\n3. The ego vehicle is on the side of the road, waiting to turn.\n4. The ego vehicle is stopped at a traffic light before entering the intersection.\n\nAnswer (just the option number):",
+                "answer": "no\n\nreasoning:\nthe ego vehicle is driving in a three-lane road with no intersections or traffic lights in sight",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 71,
+                "prompt": "Is any vehicle partially overlapping the lane boundary markings of the ego lane?\n\nOptions:\n1. No, all vehicles are clearly within their designated lanes without any overlap.\n2. Yes, but only the left red car is overlapping the lane boundary markings.\n3. Yes, right white car crosses into our lane overlapping the dashing line for only one frame, since the dashed lanes were erased in the intersection part of the street\n4. No, the vehicles are stationary and not crossing any lane boundaries.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthe right white car crosses into our lane overlapping the dashing line for only one frame, since the dashed lanes were erased in the intersection part of the street",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 72,
+                "prompt": "Is a vehicle from an adjacent lane moving into the ego lane?\n\nOptions:\n1. The vehicle is changing lanes to the left, away from the ego lane.\n2. The vehicle is staying in its own lane and maintaining its speed.\n3. The vehicle is slowing down and preparing to make a right turn.\n4. Yes, there is a white vehicle coming from the adjacent left lane into ego lane. It is doing a cut in manouver getting into ego lane\n\nAnswer (just the option number):",
+                "answer": "4\n\na white vehicle is seen crossing into the ego lane from the left.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 73,
+                "prompt": "Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?\n\nOptions:\n1. The vehicle was already in the ego lane before the ego vehicle approached.\n2. Yes, Vehicle merged directly in front of ego, without any intermediate vehicle\n3. The vehicle changed lanes behind the ego vehicle before merging.\n4. The vehicle merged into the lane alongside the ego vehicle.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nthe white vehicle is seen cutting in front of the ego vehicle without any intermediate vehicle between it and the ego vehicle.",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 74,
+                "prompt": "Is the ego vehicle currently inside a roundabout?\n\nOptions:\n1. The ego vehicle is navigating through the roundabout.\n2. The ego vehicle is approaching the entrance of a roundabout.\n3. No, There are no roundabouts in the sequence of pictures. Ego is driving straight in a highway\n4. The ego vehicle is driving in a circular pattern indicative of being in a roundabout.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are no roundabouts in the sequence of pictures. ego is driving straight in a highway",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 75,
+                "prompt": "Is the ego vehicle currently within an intersection?\n\nOptions:\n1. The ego vehicle is making a left turn into the intersection.\n2. No, There are no intersections in the sequence of pictures. Ego is driving straight in a highway\n3. The ego vehicle is approaching a traffic signal at the intersection.\n4. The ego vehicle is stopped at a yield sign within the intersection.\n\nAnswer (just the option number):",
+                "answer": "2\n\nreasoning:\nego is driving in a highway",
+                "gt_index": 2
+            },
+            {
+                "sample_idx": 76,
+                "prompt": "Is any vehicle partially overlapping the lane boundary markings of the ego lane?\n\nOptions:\n1. Yes, Vehicle which is doing the cut in manouver is overlapping the dashed line from left\n2. No, all vehicles are well within their designated lanes.\n3. Yes, but the vehicle is actually merging safely into the next lane.\n4. No, the vehicle is completely outside of the lane boundary markings.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthe white vehicle is crossing the dashed line from the left to the ego lane",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 77,
+                "prompt": "Is a vehicle from an adjacent lane moving into the ego lane?\n\nOptions:\n1. Yes, There is a bike moving from the left lane to the ego lane\n2. The vehicle is actually parked in the adjacent lane and not moving at all.\n3. There is no vehicle in the adjacent lane; only a pedestrian is present.\n4. The vehicle is moving in the opposite direction and cannot enter the ego lane.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthere is a motorcycle moving from the left lane to the ego lane",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 78,
+                "prompt": "Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?\n\nOptions:\n1. No, the vehicle merged into the lane behind the ego vehicle instead of directly ahead.\n2. Yes, but there was another vehicle in the lane that the merging vehicle cut in front of before reaching the ego vehicle.\n3. Yes, The bike that is doing the cut in is directly in front of the ego after the action. Ego had not leading vehicle before the cut in\n4. No, the merging vehicle was already in the ego lane before the ego vehicle approached.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthe ego vehicle is driving in a urban street with one lane in each direction and there are parked cars in the right side of the ego lane. there is a motorbike coming from the right and doing a cut in manouver in front of the ego vehicle. there is no vehicle in front of the ego vehicle before the cut in",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 79,
+                "prompt": "Is the ego vehicle currently inside a roundabout?\n\nOptions:\n1. No, but the ego vehicle is about to enter the roundabout shortly.\n2. Yes, the ego vehicle is currently traveling around the circular path of the roundabout.\n3. Yes, the ego vehicle is navigating through the roundabout entrance.\n4. No, Ego is in a urban street with 2 lanes for each direction and lateral parked cars in both sides\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere are no roundabouts in sight",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 80,
+                "prompt": "Is the ego vehicle currently within an intersection?\n\nOptions:\n1. The ego vehicle is making a left turn into the intersection.\n2. The ego vehicle is stopped at a traffic light within the intersection.\n3. The ego vehicle is preparing to merge into the intersection from a side street.\n4. No, Ego is in a urban street with 2 lanes for each direction and lateral parked cars in both sides\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nego is driving in a urban street with 2 lanes for each direction and lateral parked cars in both sides",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 81,
+                "prompt": "Is any vehicle partially overlapping the lane boundary markings of the ego lane?\n\nOptions:\n1. Yes, The bike overlaps the left lines during the cut in\n2. No, the vehicle is positioned entirely within the right lane without any overlap.\n3. Yes, but the vehicle is merely maintaining a safe distance from the lane boundary.\n4. No, all vehicles are well within their designated lanes.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthe motorbike is crossing the dashed line on the left of the ego lane",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 82,
+                "prompt": "Is a vehicle from an adjacent lane moving into the ego lane?\n\nOptions:\n1. The white car is merging into a lane further away from the ego lane.\n2. The white car is parked and not moving at all.\n3. The white car is actually moving in reverse into the ego lane.\n4. Yes, A white car is moving from the right lane to ego lane\n\nAnswer (just the option number):",
+                "answer": "no\n\nreasoning:\nthe white car is stationary and not moving at all.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 83,
+                "prompt": "Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?\n\nOptions:\n1. Yes, there is no object between the cut in car and the ego vehicle. It can be seen one car far away in the right lane.\n2. No, the merging vehicle is in the left lane, not the right lane.\n3. No, the merging vehicle is too far behind to affect the ego vehicle's path.\n4. Yes, but there is a motorcycle in the lane that could cause a collision.\n\nAnswer (just the option number):",
+                "answer": "no\n\nreasoning:\nthere is no vehicle merging into the ego lane",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 84,
+                "prompt": "Is the ego vehicle currently inside a roundabout?\n\nOptions:\n1. Yes, the ego vehicle is about to enter the roundabout from the right side.\n2. Yes, the ego vehicle is currently in the exit lane of the roundabout.\n3. Yes, the ego vehicle is navigating through the roundabout's inner lane.\n4. No, Ego car is in a crossing, in a urban street with 3 lanes of the same direction. Ego is in the middle lane\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nego is driving in a three-lane urban street in the middle lane.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 85,
+                "prompt": "Is the ego vehicle currently within an intersection?\n\nOptions:\n1. No, the ego vehicle is stopped at a traffic light before entering the intersection.\n2. No, the ego vehicle has already exited the intersection and is now in the adjacent lane.\n3. Yes, Yes, Ego is in a intersection but not crossing object between ego and the new leading object that just did a cut in\n4. No, the ego vehicle is on the side of the intersection waiting for pedestrians to cross.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nego is in a intersection but not crossing object between ego and the new leading object that just did a cut in",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 86,
+                "prompt": "Is any vehicle partially overlapping the lane boundary markings of the ego lane?\n\nOptions:\n1. Yes, Yes, the white car in front ego has overlap the right lane boundaries during the cut in\n2. Yes, but the vehicle is only encroaching on the shoulder and not the lane boundary.\n3. No, all vehicles are fully within their respective lanes.\n4. No, the vehicle is completely in the lane without any overlap.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthe white car in front of the ego vehicle is driving in its own lane without overlapping the lane boundary markings",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 87,
+                "prompt": "Is a vehicle from an adjacent lane moving into the ego lane?\n\nOptions:\n1. The red vehicle is actually moving away from the ego lane.\n2. The red vehicle is stationary and not changing lanes.\n3. Yes, Red vehicle from the left lane is getting into ego lane during the sequence of pictures shown\n4. The red vehicle is merging into the right lane instead of the ego lane.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthe red vehicle is moving from the left to the ego lane.",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 88,
+                "prompt": "Has a vehicle merged into the ego lane directly ahead of the ego vehicle without any intermediate vehicle?\n\nOptions:\n1. The merging vehicle was in the adjacent lane and did not enter the ego lane at all.\n2. A vehicle merged into the ego lane but was initially behind another vehicle.\n3. The vehicle merged into the ego lane but was not directly in front of the ego vehicle, instead it was off to the side.\n4. Yes, vehicle merging into ego lane is directly the car that gets in front of ego without any other vehicle in the middle\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthe red car ahead of the ego vehicle is the one that has just merged into the ego lane.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 89,
+                "prompt": "Is the ego vehicle currently inside a roundabout?\n\nOptions:\n1. The ego vehicle is navigating through the roundabout.\n2. The ego vehicle is in a lane that leads directly to the roundabout.\n3. No, Ego is driving in a straight lane in a street without any rondabout\n4. The ego vehicle is approaching the entrance of the roundabout.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are no roundabout signs or markings visible in the scene",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 90,
+                "prompt": "Is the ego vehicle currently within an intersection?\n\nOptions:\n1. The ego vehicle has just entered the intersection after stopping for a stop sign.\n2. The ego vehicle is waiting at a red light in the intersection.\n3. No, Ego is driving in a straight lane in a street without any intersection\n4. The ego vehicle is making a left turn into the intersection.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nego is driving in a straight lane in a street without any intersection",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 91,
+                "prompt": "Is any vehicle partially overlapping the lane boundary markings of the ego lane?\n\nOptions:\n1. Yes, but the vehicle is actually in a different lane and not affecting the ego lane.\n2. No, the lane boundary markings are not visible in the frames provided.\n3. No, all vehicles are completely within their respective lanes without any overlap.\n4. Yes, Red vehicle getting into ego lane is verlapping the dashed lane boundary from the left, as can be seen in a couple frames\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthe red vehicle is crossing the dashed line from the left into the ego lane.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 92,
+                "prompt": "Is there an intersection ahead in the ego direction of travel?\n\nOptions:\n1. Yes, but there are no traffic signals or signs indicating an intersection.\n2. No, the intersection is located on the left side and not in the ego direction.\n3. Yes, Cross streets and traffic signals are visible ahead.\n4. No, the road continues straight without any turns.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nthere are traffic signals and cross streets ahead of the ego vehicle.",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 93,
+                "prompt": "Do lane markings remain continuous through the intersection in the ego lane?\n\nOptions:\n1. Lane markings may be dashed but still indicate the continuation of the lane.\n2. In many cases, lane markings change color but remain visible in the intersection.\n3. Yes, lane markings are usually maintained throughout the intersection.\n4. No, The lane markings disappear within the intersection area.\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nlane markings disappear within the intersection area.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 94,
+                "prompt": "Is there a visible gap or discontinuity in the ego lane markings?\n\nOptions:\n1. No, the lane markings are consistent and well-maintained across the entire lane.\n2. No, the lane markings are clearly visible throughout the intersection.\n3. Yes, but the markings are still discernible as they fade into the intersection.\n4. Yes, The lane markings disappear within the intersection area.\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthe lane markings disappear within the intersection area.",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 95,
+                "prompt": "Do lane markings from two different lanes converge into a single lane?\n\nOptions:\n1. No, No merging lanes.\n2. Yes, the lanes are merging into a single lane.\n3. The markings suggest that one lane is ending and must yield to the other.\n4. The lane markings indicate a shift to a wider lane ahead.\n\nAnswer (just the option number):",
+                "answer": "1\n\nreasoning:\nthere are no merging lanes",
+                "gt_index": 1
+            },
+            {
+                "sample_idx": 96,
+                "prompt": "Is there an intersection ahead in the ego direction of travel?\n\nOptions:\n1. No, the road continues straight without any turns.\n2. Yes, but it is a one-way street that does not intersect with the ego vehicle's path.\n3. No, there is a roundabout ahead instead of a traditional intersection.\n4. Yes, There is an intersection ahead of the ego vehicle\n\nAnswer (just the option number):",
+                "answer": "4\n\nreasoning:\nthere is an intersection ahead of the ego vehicle",
+                "gt_index": 4
+            },
+            {
+                "sample_idx": 97,
+                "prompt": "Do lane markings remain continuous through the intersection in the ego lane?\n\nOptions:\n1. No, lane markings typically change direction or disappear at intersections.\n2. Yes, but they may be temporarily obscured by traffic signals or signs.\n3. Yes, Yes, lane markings continues through the intersection\n4. No, lane markings are often removed in intersections to avoid confusion.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nlane markings continue through the intersection",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 98,
+                "prompt": "Is there a visible gap or discontinuity in the ego lane markings?\n\nOptions:\n1. Yes, the lane markings are completely faded in the intersection area.\n2. Yes, there are additional markings that confuse the lane boundaries.\n3. No, The lane markigs remain visible within the intersection area\n4. Yes, the lane markings are only visible before entering the intersection.\n\nAnswer (just the option number):",
+                "answer": "3\n\nreasoning:\nlane markings remain visible within the intersection area",
+                "gt_index": 3
+            },
+            {
+                "sample_idx": 99,
+                "prompt": "Do lane markings from two different lanes converge into a single lane?\n\nOptions:\n1. No, the lane markings indicate a permanent separation between the lanes.\n2. No, the lane markings remain distinct and do not merge.\n3. Yes, but only for a short distance before separating again.\n4. Yes, There are 2 intersection into a single lane, one of the intersections is for incoming vehicles into the road whereas the other one is for leaving the lane\n\nAnswer (just the option number):",
+                "answer": "no\n\nreasoning:\nlane markings remain distinct and do not merge",
+                "gt_index": 4
+            }
+        ],
+        "final_accuracy": 0.8947368421052632,
+        "not_processed": 5,
+        "num_samples": 100
+    }
+}

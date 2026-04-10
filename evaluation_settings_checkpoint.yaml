@@ -1,0 +1,7 @@
+models:
+  qwen3-vl-8b:
+    provider: hf
+    model_id: "TBD"
+    trust_remote_code: true
+    dtype: auto
+    default_max_new_tokens: 256
