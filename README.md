@@ -182,10 +182,12 @@ Automingo-VLM-8B improves over the base Qwen3-VL-8B model and achieves the best 
 ## Citation
 
 ```bibtex
-@misc{automingo2026,
-  title={Automingo: Seeing the Unseen},
-  author={Divi\v{s}, V\'aclav and collaborators},
-  year={2026},
-  note={Under review}
+@inproceedings{Divis_2026_CVPR,
+  title     = {Automingo: Seeing the Unseen - Vision-Language Edge Case Dataset for Detection and Analysis of Autonomous Driving},
+  author    = {Diviš, Václav and Barceló Álvarez, Íñigo and Fariñas Nubla, Alejandro and Sánchez, Enrique and Hernández-Ros Briales, Antonio and Valach, Ondřej and Gruber, Ivan and Hruž, Marek},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
+  month     = {June},
+  year      = {2026},
+  pages     = {665-674}
 }
 ```
